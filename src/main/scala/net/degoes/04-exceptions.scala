@@ -14,7 +14,7 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Exceptions extends DefaultRunnableSpec {
+object Exceptions extends ZIOSpecDefault {
   def spec =
     suite("Exceptions") {
       suite("constructors") {

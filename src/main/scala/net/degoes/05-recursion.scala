@@ -15,7 +15,7 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Recursion extends DefaultRunnableSpec {
+object Recursion extends ZIOSpecDefault {
   def spec =
     suite("Recursion") {
       suite("basics") {
@@ -220,7 +220,7 @@ object RecursionGraduation extends zio.ZIOAppDefault {
    * Implement an effect that gets a single, lower-case character from
    * the user.
    */
-  lazy val getChoice: ZIO[Has[Console], IOException, Char] = ???
+  lazy val getChoice: ZIO[Any, IOException, Char] = ???
 
   /**
    * EXERCISE
@@ -228,7 +228,7 @@ object RecursionGraduation extends zio.ZIOAppDefault {
    * Implement an effect that prompts the user for their name, and
    * returns it.
    */
-  lazy val getName: ZIO[Has[Console], IOException, String] = ???
+  lazy val getName: ZIO[Any, IOException, String] = ???
 
   /**
    * EXERCISE
@@ -236,7 +236,7 @@ object RecursionGraduation extends zio.ZIOAppDefault {
    * Implement an effect that chooses a random word from the dictionary.
    * The dictionary is `Dictionary`.
    */
-  lazy val chooseWord: ZIO[Has[Random], Nothing, String] = ???
+  lazy val chooseWord: ZIO[Any, Nothing, String] = ???
 
   /**
    * EXERCISE
@@ -244,9 +244,9 @@ object RecursionGraduation extends zio.ZIOAppDefault {
    * Implement the main game loop, which gets choices from the user until
    * the game is won or lost.
    */
-  def gameLoop(oldState: State): ZIO[Has[Console], IOException, Unit] = ???
+  def gameLoop(oldState: State): ZIO[Any, IOException, Unit] = ???
 
-  def renderState(state: State): ZIO[Has[Console], IOException, Unit] = {
+  def renderState(state: State): ZIO[Any, IOException, Unit] = {
 
     /**
      *

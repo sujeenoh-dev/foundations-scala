@@ -13,7 +13,7 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Nulls extends DefaultRunnableSpec {
+object Nulls extends ZIOSpecDefault {
   def spec =
     suite("Nulls") {
       suite("basics") {

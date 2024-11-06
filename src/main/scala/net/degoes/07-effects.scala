@@ -13,9 +13,8 @@ import zio._
 import zio.test._
 import zio.test.TestAspect._
 import java.io.IOException
-import zio.test.environment.TestConsole
 
-object Effects extends DefaultRunnableSpec {
+object Effects extends ZIOSpecDefault {
   def spec =
     suite("Effects") {
       suite("constructors") {
@@ -94,7 +93,7 @@ object Effects extends DefaultRunnableSpec {
             test("mapError") {
               val errorCode = 42
 
-              val failure = IO.fail(errorCode)
+              val failure = ZIO.fail(errorCode)
 
               val mappedFailure: IO[String, Nothing] = failure.mapError(???)
 
@@ -114,7 +113,7 @@ object Effects extends DefaultRunnableSpec {
               val _ = first
               val _ = last
 
-              val zipped: ZIO[Has[Console], IOException, Unit] = ???
+              val zipped: ZIO[Any, IOException, Unit] = ???
 
               for {
                 _      <- zipped
@@ -170,7 +169,7 @@ object Effects extends DefaultRunnableSpec {
              */
             test("flatMap") {
 
-              def program: ZIO[Has[Console], IOException, Unit] = ???
+              def program: ZIO[Any, IOException, Unit] = ???
 
               val expected =
                 Vector("What is your name?\n", "Sherlock\n", "Hello, Sherlock!\n")

@@ -17,7 +17,7 @@ import zio._
 import zio.test._
 import zio.test.TestAspect._
 
-object Lambdas extends DefaultRunnableSpec {
+object Lambdas extends ZIOSpecDefault {
   def assertTypeEquals[A, B](implicit ev: A <:< B) = assertCompletes
 
   def spec =
@@ -332,7 +332,7 @@ object LambdasGraduation extends ZIOAppDefault {
   }
 
   def readFile(file: String): Task[String] =
-    Task.attempt {
+    ZIO.attempt {
       val source = scala.io.Source.fromFile(file)
 
       try {

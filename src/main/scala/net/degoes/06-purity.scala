@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit
 import java.time.MonthDay
 import scala.util.Random
 
-object Purity extends DefaultRunnableSpec {
+object Purity extends ZIOSpecDefault {
   def spec =
     suite("Purity") {
       suite("functions") {
@@ -108,7 +108,7 @@ object Purity extends DefaultRunnableSpec {
  * and use this to update an application from procedural style to
  * functional style.
  */
-object PurityGraduation extends DefaultRunnableSpec {
+object PurityGraduation extends ZIOSpecDefault {
   final case class Stateful[State, +A](compute: State => (State, A)) { self =>
     def map[B](f: A => B): Stateful[State, B] =
       self.flatMap(a => Stateful.succeed(f(a)))

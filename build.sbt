@@ -3,8 +3,7 @@ import sbt._
 lazy val foundationsScala = (project in file(".")).settings(
   name := "foundations",
   organization := "net.degoes",
-  version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.10"
+  version := "0.1-SNAPSHOT"
 )
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmt test:scalafmt")
@@ -14,7 +13,7 @@ addCommandAlias(
 )
 
 /* scala versions and options */
-scalaVersion := "2.13.6"
+scalaVersion := "2.13.14"
 
 // These options will be used for *all* versions.
 scalacOptions ++= Seq(
@@ -30,7 +29,7 @@ scalacOptions ++= Seq(
 
 javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.7", "-target", "1.7")
 
-val ZIOVersion = "2.0.0-M4"
+val ZIOVersion = "2.1.10"
 
 libraryDependencies ++= Seq(
   "dev.zio" %% "zio"          % ZIOVersion,
@@ -41,8 +40,3 @@ libraryDependencies ++= Seq(
 )
 
 testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
-
-resolvers ++= Seq(
-  "Secured Central Repository" at "https://repo1.maven.org/maven2",
-  Resolver.sonatypeRepo("snapshots")
-)

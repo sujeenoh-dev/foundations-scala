@@ -20,7 +20,7 @@ import zio._
 import zio.test._
 import zio.test.TestAspect._
 
-object Data extends DefaultRunnableSpec {
+object Data extends ZIOSpecDefault {
   type ???
 
   def spec =

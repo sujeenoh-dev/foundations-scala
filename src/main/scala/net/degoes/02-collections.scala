@@ -16,7 +16,7 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Collections extends DefaultRunnableSpec {
+object Collections extends ZIOSpecDefault {
   def spec =
     suite("Collections") {
       suite("operations") {
