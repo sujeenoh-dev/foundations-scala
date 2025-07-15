@@ -231,9 +231,10 @@ object Data extends ZIOSpecDefault {
 
             val _ = Green
             val _ = Blue
+            val _ = Red
 
             val isRed: Color => Boolean = {
-              case Red => true
+              case _ => ???
             }
 
             assertTrue(!isRed(Blue))
