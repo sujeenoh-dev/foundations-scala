@@ -104,6 +104,18 @@ object Data extends ZIOSpecDefault {
             assertTrue(perms.copy(canRead = false) == new Permissions(false, false, false)) // TODO
           } @@ ignore +
           suite("patterns") {
+            /**
+              * 패턴매칭은 값이 어떤 모양인지 살펴보고 “이 경우엔 이렇게, 저 경우엔 저렇게” 처리할 수 있도록 해 주는 일종의 다중 if-else 문입니다.
+              * 
+              * ```scala
+              * fruit match {
+              *   case "apple" => "apple"
+              *   case "banana" => "banana"
+              *   case "cherry" => "cherry"
+              *   case _ => "unknown"
+              * }
+              * ```
+              */
 
             /**
              * 연습문제
@@ -200,7 +212,7 @@ object Data extends ZIOSpecDefault {
 
                 val _ = sherlockStreet
 
-                def isSherlockStreet(address: Address): Boolean = ???
+                def isSherlockStreet(address: Address): Boolean = ??? // TODO
 
                 val address = Address("220", "Baker", "NW1 6XE")
 
@@ -209,12 +221,25 @@ object Data extends ZIOSpecDefault {
           }
       } +
         suite("Sealed Traits") {
+          /**
+           * 스칼라에서 sealed trait는 `합 타입(Sum Type)`을 정의할 때 가장 흔히 사용되는 방식입니다. 
+           * sealed 키워드는 해당 트레이트를 상속하는 클래스나 객체가 같은 파일 내에만 정의될 수 있도록 제한합니다. 
+           * 이 덕분에 컴파일러는 이 트레이트를 상속한 모든 하위 타입을 완전히 파악할 수 있고, 패턴 매칭에서 모든 경우를 빠짐없이 처리했는지 검사할 수 있습니다. 
+           * 즉, sealed trait는 타입의 닫힌 계층을 정의할 때 사용하며, 안전하고 예측 가능한 패턴 매칭을 가능하게 해 줍니다.
+           * 예를 들면 다음과 같습니다:
+           * ```scala
+           * sealed trait Animal
+           * object Animal {
+           *   case class Dog(name: String) extends Animal
+           *   case class Cat(name: String) extends Animal
+           * }
+           * ```
+           */
 
           /**
            * 연습문제
            *
-           * 다음 trait를 sealed로 만들어 패턴 매칭에서 완전성 검사를
-           * 얻으세요. 경고가 어떻게 변하는지 주목하세요.
+           * 다음 trait를 sealed로 만들어 패턴 매칭으로 아래 빈칸을 채워보세요.
            */
           test("sealed") {
             trait Color
@@ -235,8 +260,7 @@ object Data extends ZIOSpecDefault {
             /**
              * 연습문제
              *
-             * `UK`, `Germany`, `India`, `Netherlands`, `USA` 케이스 객체로
-             * 확장되는 sealed trait `Country`를 생성하세요.
+             * `UK`, `Germany`, `India`, `Netherlands`, `USA` 케이스 객체로 확장되는 sealed trait `Country`를 생성하세요.
              */
             test("country") {
               trait Country
@@ -248,6 +272,20 @@ object Data extends ZIOSpecDefault {
               assertTrue(isCountry(UK) && isCountry(USA))
             } @@ ignore +
             /**
+             * 스칼라의 패턴 매칭에서 **as 패턴(as pattern)**은, 패턴으로 값을 분해하면서 분해한 값 전체를 그대로 별도의 이름으로도 저장하고 싶을 때 사용하는 문법입니다.
+             *  즉, 내부 값도 꺼내고 싶고, 동시에 원래 값 전체도 변수로 가지고 있고 싶을 때 쓰는 패턴입니다.
+             * ```scala
+             * sealed trait Shape
+             * case class Rectangle(width: Double, height: Double) extends Shape
+             * 
+             * def describe(shape: Shape): String = shape match {
+             *   case rect @ Rectangle(w, h) if w == h =>
+             *     s"Square detected: $rect"
+             *   case Rectangle(w, h) =>
+             *     s"Rectangle of width $w and height $h"
+             * }
+             * ```
+             * 
              * 연습문제
              *
              * `asCreditCard` 메서드를 구현할 때 `as` 패턴을 사용하여
@@ -275,8 +313,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 정확한
-           * 데이터 모델을 생성하세요: 기혼, 독신, 이혼.
+           * 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
            */
           test("example 1") {
             type RelationshipStatus = ???
@@ -290,9 +327,7 @@ object Data extends ZIOSpecDefault {
             /**
              * 연습문제
              *
-             * 연결 URL, 데이터 형식(JSON 또는 XML), API 토큰(문자열)을
-             * 저장하는 `PaymentProcessorAPI`의 정확한 데이터 모델을
-             * 생성하세요.
+             * 연결 URL, 데이터 형식(JSON 또는 XML), API 토큰(문자열)을 저장하는 `PaymentProcessorAPI`의 데이터 모델을 만드세요.
              */
             test("example 2") {
               type PaymentProcessorAPI = ???
