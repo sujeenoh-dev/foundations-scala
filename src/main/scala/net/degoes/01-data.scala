@@ -1,18 +1,13 @@
 /**
- * In functional Scala, nearly all data is immutable. Data models are
- * constructed entirely from either "records", which have multiple fields
- * of different types, or "enumerations", which have multiple cases with
- * different structure. Scala provides powerful functionality built into
- * records and enumerations (Scala 3 only). Everything about the way you
- * construct these data models to the way you use them is different than
- * in an object-oriented programming language. The emphasis is on making
- * very precise data models that cannot be used to store "bad data", which
- * results in eliminating runtime errors and keeping bad data out of
- * databases and third-party systems.
+ * 함수형 스칼라에서는 거의 모든 데이터가 불변(immutable)입니다. 
+ * 데이터 모델은 서로 다른 타입의 여러 필드를 가진 "레코드(곱객체)" 
+ * 또는 서로 다른 구조를 가진 여러 케이스의 "열거형(합객체)"으로 완전히 구성됩니다. 
+ * 스칼라는 레코드체 열거형에 내장된 강력한 기능을 제공합니다(스칼라 3만 해당). 
+ * 이러한 데이터 모델을 구성하는 방식부터 사용하는 방식까지 모든 것이 객체지향 프로그래밍 언어와는 다릅니다. 
+ * 핵심은 "잘못된 데이터"를 저장하는 데 사용할 수 없는 매우 정확한 데이터 모델을 만드는 것으로, 
+ * 이는 런타임 오류를 제거하고 데이터베이스와 외부 시스템에 잘못된 데이터가 들어가는 것을 방지합니다.
  *
- * In this module, you will learn how to adopt the functional tools that
- * Scala gives you to solve data modeling problems in a precise way that
- * improves the maintainability and reliability of your software.
+ * 이 모듈에서는 소프트웨어의 유지보수성과 신뢰성을 향상시키는 정확한 방식으로 데이터 모델링 문제를 해결하기 위해 스칼라가 제공하는 함수형 도구를 채택하는 방법을 배우게 됩니다.
  */
 package net.degoes
 
@@ -26,78 +21,80 @@ object Data extends ZIOSpecDefault {
   def spec =
     suite("Data") {
       suite("Case Classes") {
+        /**
+         * 스칼라에서 **곱객체(Product Type)**란 여러 값을 함께 묶어 하나의 단위로 표현하는 타입을 말합니다. 
+         * 예를 들어 `case class`가 대표적이며, 클래스 안에 여러 필드가 존재하고 이 값들을 모두 함께 가진다는 의미에서 곱(×)이라는 이름이 붙습니다. 
+         * 예를 들어 `case class Person(name: String, age: Int)`라고 하면, `Person`은 반드시 이름과 나이를 둘 다 함께 가지게 됩니다. 즉, 곱객체는 “그리고(AND)” 관계를 나타냅니다.
+         * 곱객체는 여러 값이 항상 함께 존재해야 함을 보장합니다.
+         */
 
         /**
-         * EXERCISE
+         * 연습문제
          *
-         * Create a Person case class to get free getters (fields) for all the
-         * constructor parameters of the class.
+         * 클래스의 모든 생성자 매개변수에 대해 자동으로 getter를 생성하기 위해 `Person` 케이스 클래스를 생성하세요.
          */
         test("fields") {
-          class Person(name: String, age: Int)
+          class Person(name: String, age: Int) // TODO
 
-          def getName(p: Person): String = ???
-          def getAge(p: Person): Int     = ???
+          def getName(p: Person): String = ??? // TODO
+          def getAge(p: Person): Int     = ??? // TODO
 
-          val holmes = new Person("Sherlock Holmes", 42)
+          val holmes = new Person("Sherlock Holmes", 42) // TODO
 
           assertTrue(getName(holmes) == "Sherlock Holmes" && getAge(holmes) == 42)
         } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Create a Person case class with a name (String) and an age (Int),
-           * and delete the fake constructor to observe the free constructor that
-           * all case classes receive in their companion objects.
+           * 이름(String)과 나이(Int)를 가진 `Person` 케이스 클래스를 생성하고, 가짜 생성자를 구현하여 모든 케이스 클래스가 컴패니언 객체에서 받는 자동 생성자를 만드세요.
            */
           test("apply") {
             object Person {
-              def apply(name: String, age: Int) = ???
+              def apply(name: String, age: Int) = ??? // TODO
             }
 
             assertTrue(Person("Sherlock Holmes", 42) == Person("Sherlock Holmes", 42))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Get a free implementation of equality for the `Profile` class by
-           * turning it into a case class.
+           * `Profile` 클래스를 케이스 클래스로 변환하여 동등성(equality)의 자동 구현을 확인하세요.
            */
           test("equals") {
-            class Profile(val age: Int)
+            class Profile(val age: Int) // TODO
 
-            assertTrue(new Profile(42) == new Profile(42))
+            assertTrue(new Profile(42) == new Profile(42)) // TODO
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Get a free implementation of hash code for the `CreditCard` class
-           * by turning it into a case class.
+           * `CreditCard` 클래스를 케이스 클래스로 변환하여 해시 코드의
+           * 자동 구현을 받으세요.
            */
           test("hashCode") {
-            class CreditCard(val number: String)
+            class CreditCard(val number: String) // TODO
 
-            assertTrue(new CreditCard("123").hashCode == new CreditCard("123").hashCode)
+            assertTrue(new CreditCard("123").hashCode == new CreditCard("123").hashCode) // TODO
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Get a free implementation of `toString` for the `Address` class
-           * by turning it into a case class.
+           * `Address` 클래스를 케이스 클래스로 변환하여 `toString`의
+           * 자동 구현을 받으세요.
            */
           test("toString") {
-            class Address(val street: String)
+            class Address(val street: String) // TODO
 
-            assertTrue(new Address("221B Baker Street").toString == "Address(221B Baker Street)")
+            assertTrue(new Address("221B Baker Street").toString == "Address(221B Baker Street)") // TODO
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Get a free implementation of `copy` for the `Permissions` class
-           * by turning it into a case class.
+           * `Permissions` 클래스를 케이스 클래스로 변환하여 `copy`의
+           * 자동 구현을 받으세요.
            */
           test("copy") {
-            class Permissions(val canRead: Boolean, canWrite: Boolean, canShare: Boolean) {
+            class Permissions(val canRead: Boolean, canWrite: Boolean, canShare: Boolean) { // TODO
               def copy(
                 canRead: Boolean = this.canRead,
                 canWrite: Boolean = this.canWrite,
@@ -105,100 +102,99 @@ object Data extends ZIOSpecDefault {
               ): Permissions = ???
             }
 
-            val perms = new Permissions(true, false, false)
+            val perms = new Permissions(true, false, false) // TODO
 
-            assertTrue(perms.copy(canRead = false) == new Permissions(false, false, false))
+            assertTrue(perms.copy(canRead = false) == new Permissions(false, false, false)) // TODO
           } @@ ignore +
           suite("patterns") {
 
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Use pattern matching to extract out the `street` of `Address`.
+             * 패턴 매칭을 사용하여 `Address`의 `street`을 추출하세요.
              */
             test("simple") {
               final case class Address(street: String)
 
-              def extractStreet(address: Address): String = ???
+              def extractStreet(address: Address): String = ??? // TODO
 
               assertTrue(extractStreet(Address("221B Baker")) == "221B Baker")
             } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Use pattern matching to extract out the `postalCode` of
-               * `Address`, using a wildcard to ignore (match any) `street`.
+               * 패턴 매칭을 사용하여 `Address`의 `postalCode`를 추출하세요.
+               * 와일드카드를 사용하여 `street`을 무시(어떤 값이든 매칭)하세요.
                */
               test("wildcard") {
                 final case class Address(street: String, postalCode: String)
 
-                def extractPostalCode(address: Address): String = ???
+                def extractPostalCode(address: Address): String = ??? // TODO
 
                 assertTrue(extractPostalCode(Address("221B Baker", "NW1 6XE")) == "NW1 6XE")
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using pattern matching on a constant, implement the provided
-               * function so that it returns true for any street matching
-               * "221B Baker", regardless of postal code.
+               * 상수에 대한 패턴 매칭을 사용하여 제공된 함수를 구현하세요.
+               * 우편번호에 관계없이 "221B Baker"와 일치하는 모든 거리에 대해
+               * true를 반환해야 합니다.
                */
               test("constant") {
                 final case class Address(street: String, postalCode: String)
 
-                def is221B(address: Address): Boolean = ???
+                def is221B(address: Address): Boolean = ??? // TODO
 
                 assertTrue(is221B(Address("221B Baker", "NW1 6XE")))
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using multiple ordered case clauses in a pattern match,
-               * implement the provided function so it returns "Knows Holmes"
-               * if provided any address on "Baker" street, and "Unknown"
-               * otherwise.
+               * 패턴 매칭에서 여러 개의 순서가 있는 케이스 절을 사용하여
+               * 제공된 함수를 구현하세요. "Baker" 거리의 모든 주소에 대해
+               * "Knows Holmes"를 반환하고, 그렇지 않으면 "Unknown"을
+               * 반환해야 합니다.
                */
               test("ordered") {
                 final case class Address(number: String, street: String, postalCode: String)
 
-                def neighbor(address: Address): String = ???
+                def neighbor(address: Address): String = ??? // TODO
 
                 assertTrue(neighbor(Address("220", "Baker", "NW1 6XE")) == "Knows Holmes")
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using conditional patterns, implement the provided function so
-               * that it returns true for any street that contains "Baker".
+               * 조건부 패턴을 사용하여 제공된 함수를 구현하세요. (conditional patterns)
+               * "Baker"를 포함하는 모든 거리에 대해 true를 반환해야 합니다.
                */
               test("conditional") {
                 final case class Address(street: String, postalCode: String)
 
-                def isBaker(address: Address): Boolean = ???
+                def isBaker(address: Address): Boolean = ??? // TODO
 
                 assertTrue(isBaker(Address("220 Baker", "NW1 6XE")))
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using nested patterns, implement the provided function so
-               * that it extracts out the postal code of any person.
+               * 중첩된 패턴을 사용하여 제공된 함수를 구현하세요. (nested patterns)
+               * 모든 사람의 우편번호를 추출해야 합니다.
                */
               test("nested") {
                 final case class Person(name: String, address: Address)
                 final case class Address(street: String, postalCode: String)
 
-                def extractPostalCode(person: Person): String = ???
+                def extractPostalCode(person: Person): String = ??? // TODO
 
                 val sherlock = Person("Sherlock Holmes", Address("221B Baker", "NW1 6XE"))
 
                 assertTrue(extractPostalCode(sherlock) == "NW1 6XE")
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using quoted constants, return true if an address street
-               * matches the `sherlockStreet` constant.
+               * 입력된 address.street가 `sherlockStreet`와 일치하면 true를 반환하세요.
                */
               test("quoted") {
                 final case class Address(number: String, street: String, postalCode: String)
@@ -218,10 +214,10 @@ object Data extends ZIOSpecDefault {
         suite("Sealed Traits") {
 
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Seal the following trait to obtain exhaustivity checking on
-           * pattern matching. Notice how the warning changes.
+           * 다음 trait를 sealed로 만들어 패턴 매칭에서 완전성 검사를
+           * 얻으세요. 경고가 어떻게 변하는지 주목하세요.
            */
           test("sealed") {
             trait Color
@@ -240,10 +236,10 @@ object Data extends ZIOSpecDefault {
             assertTrue(!isRed(Blue))
           } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Create a sealed trait `Country` that is extended by case objects
-             * `UK`, `Germany`, `India`, `Netherlands`, and `USA`.
+             * `UK`, `Germany`, `India`, `Netherlands`, `USA` 케이스 객체로
+             * 확장되는 sealed trait `Country`를 생성하세요.
              */
             test("country") {
               trait Country
@@ -255,12 +251,12 @@ object Data extends ZIOSpecDefault {
               assertTrue(isCountry(UK) && isCountry(USA))
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * In implementing the `asCreditCard` method, use an `as` pattern
-             * to match against a `CreditCard` payment method, capture it as a
-             * variable, and return that variable wrapped in a `Some(_)`
-             * constructor. For other payment methods, return `None`.
+             * `asCreditCard` 메서드를 구현할 때 `as` 패턴을 사용하여
+             * `CreditCard` 결제 방법에 대해 매칭하고, 변수로 캡처한 후
+             * `Some(_)` 생성자로 감싸서 반환하세요. 다른 결제 방법의 경우
+             * `None`을 반환하세요.
              */
             test("as patterns") {
               sealed trait PaymentMethod
@@ -280,11 +276,10 @@ object Data extends ZIOSpecDefault {
         suite("Modeling") {
 
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Create a precise data model for `RelationshipStatus`, which
-           * models the relationship status of an individual: married,
-           * single, divorced.
+           * 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 정확한
+           * 데이터 모델을 생성하세요: 기혼, 독신, 이혼.
            */
           test("example 1") {
             type RelationshipStatus = ???
@@ -296,11 +291,11 @@ object Data extends ZIOSpecDefault {
             assertTrue(makeMarried != makeSingle)
           } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Create a precise data model for a `PaymentProcessorAPI`, which
-             * stores a connection URL, a data format (JSON or XML), and an
-             * API token, which is a string.
+             * 연결 URL, 데이터 형식(JSON 또는 XML), API 토큰(문자열)을
+             * 저장하는 `PaymentProcessorAPI`의 정확한 데이터 모델을
+             * 생성하세요.
              */
             test("example 2") {
               type PaymentProcessorAPI = ???
@@ -317,9 +312,10 @@ object Data extends ZIOSpecDefault {
               assertTrue(api1 == api1 && api1 != api2)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Create a precise data model for a user's crypto portfolio.
+             * 사용자의 암호화폐 포트폴리오에 대한 정확한 데이터 모델을
+             * 생성하세요.
              */
             test("example 3") {
               type Portfolio = ???
@@ -339,11 +335,11 @@ object Data extends ZIOSpecDefault {
               assertTrue(p1 == p2)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Create a precise data model for a subscription for a SaaS
-             * product, which could be at the annual or monthly level, and
-             * which could bundle different features into the plan.
+             * SaaS 제품에 대한 구독의 정확한 데이터 모델을 생성하세요.
+             * 연간 또는 월간 수준일 수 있고, 계획에 다양한 기능을
+             * 번들로 포함할 수 있습니다.
              */
             test("example 4") {
               type Features     = ???
@@ -357,11 +353,11 @@ object Data extends ZIOSpecDefault {
               assertTrue(makeMonthly(9.99, features) != makeAnnually(9.99, features))
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Create a precise data model for fields, which contain names
-             * and field types, where field types may be integers, strings,
-             * booleans, or other common types for fields in forms.
+             * 이름과 필드 타입을 포함하는 필드의 정확한 데이터 모델을
+             * 생성하세요. 필드 타입은 정수, 문자열, 불린 또는 폼의
+             * 필드에 대한 기타 일반적인 타입일 수 있습니다.
              */
             test("advanced example") {
               type Field[A]     = ???
@@ -383,14 +379,14 @@ object Data extends ZIOSpecDefault {
 }
 
 /**
- * While many programming languages have a construct like case classes, few
- * have the power of sealed traits, and most do not have the pattern matching
- * capabilities of Scala. With the combination of these powerful features, you
- * can construct very precise data models that eliminate runtime errors and
- * make it easier than ever to test and maintain code.
+ * 많은 프로그래밍 언어가 케이스 클래스와 같은 구성을 가지고 있지만,
+ * sealed trait의 힘을 가진 언어는 거의 없고, 대부분이 스칼라의 패턴 매칭
+ * 기능을 가지고 있지 않습니다. 이러한 강력한 기능들의 조합으로, 런타임 오류를
+ * 제거하고 코드를 테스트하고 유지보수하기를 이전보다 쉽게 만드는 매우 정확한
+ * 데이터 모델을 구성할 수 있습니다.
  *
- * In this graduation project, you will gain experience constructing precise
- * data models using case classes and sealed traits.
+ * 이 졸업 프로젝트에서는 케이스 클래스와 sealed trait를 사용하여 정확한
+ * 데이터 모델을 구성하는 경험을 얻게 됩니다.
  */
 object DataGraduation extends ZIOAppDefault {
 
@@ -419,23 +415,22 @@ object DataGraduation extends ZIOAppDefault {
   }
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Construct a data model for the state of a game world in a text-based
-   * role-playing game. The data model should represent the player character,
-   * the map of the game world, items and characters in the game world, and
-   * anything else relevant to the game.
+   * 텍스트 기반 롤플레잉 게임의 게임 월드 상태에 대한 데이터 모델을
+   * 구성하세요. 데이터 모델은 플레이어 캐릭터, 게임 월드의 지도,
+   * 게임 월드의 아이템과 캐릭터, 그리고 게임과 관련된 기타 모든 것을
+   * 표현해야 합니다.
    */
   final case class State(playerName: String)
 
   final case class Step(nextState: Option[State], output: String)
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Implement the `nextStep` function in such a fashion that new states for
-   * the game world are constructed from both the old state and the current
-   * command read from the user.
+   * 사용자로부터 읽은 현재 명령과 이전 상태 모두에서 게임 월드의
+   * 새로운 상태가 구성되도록 `nextStep` 함수를 구현하세요.
    */
   def nextStep(state: State, command: Command): Step = ???
 
