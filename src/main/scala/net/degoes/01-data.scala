@@ -46,7 +46,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * 이름(String)과 나이(Int)를 가진 `Person` 케이스 클래스를 생성하고, 가짜 생성자를 구현하여 모든 케이스 클래스가 컴패니언 객체에서 받는 자동 생성자를 만드세요.
+           * 이름(String)과 나이(Int)를 가진 `Person` 케이스 클래스를 생성하고, 가짜 생성자를 변경하여 모든 케이스 클래스가 컴패니언 객체에서 받는 자동 생성자를 만드세요.
            */
           test("apply") {
             object Person {
@@ -58,7 +58,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * `Profile` 클래스를 케이스 클래스로 변환하여 동등성(equality)의 자동 구현을 확인하세요.
+           * `Profile` 클래스를 케이스 클래스로 변환하여 동등성(equality)이 자동 구현된 것을 확인하세요.
            */
           test("equals") {
             class Profile(val age: Int) // TODO
@@ -68,8 +68,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * `CreditCard` 클래스를 케이스 클래스로 변환하여 해시 코드의
-           * 자동 구현을 받으세요.
+           * `CreditCard` 클래스를 케이스 클래스로 변환하여 해시 코드가 자동 구현된 것을 확인하세요.
            */
           test("hashCode") {
             class CreditCard(val number: String) // TODO
@@ -79,8 +78,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * `Address` 클래스를 케이스 클래스로 변환하여 `toString`의
-           * 자동 구현을 받으세요.
+           * `Address` 클래스를 케이스 클래스로 변환하여 `toString`이 자동 구현된 것을 확인하세요.
            */
           test("toString") {
             class Address(val street: String) // TODO
@@ -90,8 +88,7 @@ object Data extends ZIOSpecDefault {
           /**
            * 연습문제
            *
-           * `Permissions` 클래스를 케이스 클래스로 변환하여 `copy`의
-           * 자동 구현을 받으세요.
+           * `Permissions` 클래스를 케이스 클래스로 변환하여 `copy`가 자동 구현된 것을 확인하세요.
            */
           test("copy") {
             class Permissions(val canRead: Boolean, canWrite: Boolean, canShare: Boolean) { // TODO
