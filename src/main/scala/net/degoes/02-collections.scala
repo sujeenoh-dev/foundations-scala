@@ -1,15 +1,12 @@
 /**
- * For loops are common in other programming languages. In functional Scala,
- * however, most for loops are replaced by operations on Scala collections,
- * which provide high-level and declarative solutions to many problems
- * involving data processing and transformation. Mastery of the Scala
- * collections library can provide an enormous boost to productivity,
- * as well as cement understanding of the tools of the experienced
- * functional programmer (mapping, filtering, folding, etc.).
+ * for 루프는 다른 프로그래밍 언어에서 흔히 사용됩니다.
+ * 하지만 함수형 스칼라에서는 대부분의 for 루프가 스칼라 컬렉션의 연산으로 대체됩니다.
+ * 이 연산들은 데이터 처리와 변환에 관련된 많은 문제를 고수준이면서 선언적으로 해결할 수 있게 해줍니다.
+ * 스칼라 컬렉션 라이브러리를 잘 활용하면 생산성을 크게 높일 수 있을 뿐만 아니라,
+ * 함수형 프로그래머가 자주 사용하는 도구(매핑, 필터링, 폴딩 등)에 대한 이해를 확고히 할 수 있습니다.
  *
- * In this module, you will become more familiar with the power of the
- * Scala collections library as you solve a variety of common tasks
- * using the collections operations.
+ * 이 모듈에서는 다양한 일반적인 과제를 해결하면서 스칼라 컬렉션 라이브러리의 강력함을 더 익숙하게 다루게 될 것입니다.
+ * 이를 통해 데이터 처리 및 변환에 있어 함수형 프로그래밍의 도구들을 실전에서 활용하는 방법을 익힐 수 있습니다.
  */
 package net.degoes
 
@@ -22,10 +19,9 @@ object Collections extends ZIOSpecDefault {
       suite("operations") {
 
         /**
-         * EXERCISE
+         * 연습문제
          *
-         * Using `List#foreach`, add up the contents of the provided list
-         * into the variable `sum`.
+         * `List#foreach`를 사용하여, 주어진 리스트의 모든 값을 변수 `sum`에 더하세요.
          */
         test("foreach") {
           var sum = 0
@@ -39,10 +35,9 @@ object Collections extends ZIOSpecDefault {
           assertTrue(sum == 6)
         } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#map`, transform the provided list into a new list,
-           * where each element of the list has been multiplied by 2.
+           * `List#map`을 사용하여, 주어진 리스트의 각 요소를 2배로 곱한 새로운 리스트로 변환하세요.
            */
           test("map") {
             val list1 = List(0, 3, 0, 2, 1)
@@ -52,10 +47,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2.sum == 12 && list2.length == list1.length)
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#filter`, filter the provided list so that it only
-           * contains even numbers.
+           * `List#filter`를 사용하여, 주어진 리스트에서 짝수만 남도록 필터링하세요.
            */
           test("filter") {
             val isEven = (i: Int) => i % 2 == 0
@@ -69,10 +63,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(0, 0, 2))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Use `List#take` to take the first 2 elements of the provided
-           * list.
+           * `List#take`을 사용하여, 주어진 리스트의 앞에서 2개의 요소만 취하세요.
            */
           test("take") {
             val list1 = List(1, 2, 3, 4)
@@ -82,10 +75,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(1, 2))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Use `List#takeWhile` to take elements for as long as they are
-           * strictly less than 3.
+           * `List#takeWhile`을 사용하여, 요소가 3보다 작은 동안만 리스트에서 값을 취하세요.
            */
           test("takeWhile") {
             val list1 = List(1, 2, 0, 3, 1, 2)
@@ -95,10 +87,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(1, 2, 0))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Use `List#drop` to drop the first 2 elements of the provided
-           * list.
+           * `List#drop`을 사용하여, 주어진 리스트의 앞에서 2개의 요소를 버리세요.
            */
           test("drop") {
             val list1 = List(1, 2, 3, 4)
@@ -108,10 +99,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(3, 4))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Use `List#dropWhile` to drop elements for as long as they are
-           * strictly less than 3.
+           * `List#dropWhile`을 사용하여, 요소가 3보다 작은 동안만 리스트에서 값을 버리세요.
            */
           test("dropWhile") {
             val list1 = List(1, 2, 0, 3, 1, 2)
@@ -121,11 +111,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(3, 1, 2))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#collect` and a partial function, collect all even
-           * numbers from the provided List, wrapping them into an `Even`
-           * wrapper type.
+           * `List#collect`과 부분 함수를 사용하여, 주어진 리스트에서 짝수만 골라내고, 이를 `Even` 래퍼 타입으로 감싸세요.
            */
           test("collect") {
             final case class Even(number: Int)
@@ -141,10 +129,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(list2 == List(Even(0), Even(0), Even(2)))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `partition`, partition the provided list of integers into
-           * those that are even, and those that are odd.
+           * `partition`을 사용하여, 주어진 정수 리스트를 짝수와 홀수로 분리하세요.
            */
           test("partition") {
             val isEven = (i: Int) => i % 2 == 0
@@ -158,10 +145,10 @@ object Collections extends ZIOSpecDefault {
             assertTrue(even == List(0, 0, 2) && odd == List(3, 1))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `reduceOption`, sum up both of the provided lists. In what
-           * cases does `reduceOption` return `None`?
+           * `reduceOption`을 사용하여, 주어진 두 리스트의 합을 구하세요.
+           * `reduceOption`이 `None`을 반환하는 경우는 언제인가요?
            */
           test("reduceOption") {
             val list1: List[Int] = List()
@@ -176,10 +163,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(summedList1 == None && summedList2 == Some(6))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#find`, find the first number that is greater than
-           * two in the provided list.
+           * `List#find`를 사용하여, 주어진 리스트에서 2보다 큰 첫 번째 숫자를 찾으세요.
            */
           test("find") {
             val list = List(1, 2, 3, 4)
@@ -191,10 +177,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(firstGreaterThan2 == Some(3))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#exists`, test to see if there exists an element of
-           * the list that is negative.
+           * `List#exists`를 사용하여, 주어진 리스트에 음수가 존재하는지 확인하세요.
            */
           test("exists") {
             val list = List(1, 2, 3, 4, -1)
@@ -206,10 +191,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(existsNegative)
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using `List#forall`, test to see if all elements of the list
-           * are even numbers.
+           * `List#forall`를 사용하여, 주어진 리스트의 모든 요소가 짝수인지 확인하세요.
            */
           test("forall") {
             val isEven = (i: Int) => i % 2 == 0
@@ -227,9 +211,9 @@ object Collections extends ZIOSpecDefault {
           suite("folds") {
 
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Using `List#foldLeft`, compute the sum of a list.
+             * `List#foldLeft`를 사용하여, 주어진 리스트의 합을 구하세요.
              */
             test("sum") {
               def sum(list: List[Int]): Int = ???
@@ -237,9 +221,9 @@ object Collections extends ZIOSpecDefault {
               assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
             } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, compute the maximum element of a list.
+               * `List#foldLeft`를 사용하여, 주어진 리스트의 최대 요소를 구하세요.
                */
               test("max") {
                 def max(list: List[Int]): Int = ???
@@ -247,9 +231,9 @@ object Collections extends ZIOSpecDefault {
                 assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, compute the minimum element of a list.
+               * `List#foldLeft`를 사용하여, 주어진 리스트의 최소 요소를 구하세요.
                */
               test("min") {
                 def min(list: List[Int]): Int = ???
@@ -257,9 +241,9 @@ object Collections extends ZIOSpecDefault {
                 assertTrue(min(List(1, 7, 3, 2, 0, 4, 5)) == 0)
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, compute the reverse of a list.
+               * `List#foldLeft`를 사용하여, 주어진 리스트를 뒤집으세요.
                */
               test("reverse") {
                 def reverse[A](list: List[A]): List[A] = ???
@@ -267,11 +251,9 @@ object Collections extends ZIOSpecDefault {
                 assertTrue(reverse(List(1, 7, 3)) == List(3, 7, 1))
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, implement a function to partition
-               * a list into those satisfying a predicate, and those not
-               * satisfying the predicate.
+               * `List#foldLeft`를 사용하여, 주어진 리스트를 조건에 맞는 요소와 그렇지 않은 요소로 분리하는 함수를 구현하세요.
                */
               test("partition") {
                 def partition[A](list: List[A])(pred: A => Boolean): (List[A], List[A]) = ???
@@ -279,10 +261,9 @@ object Collections extends ZIOSpecDefault {
                 assertTrue(partition(List(1, 7, 3))(_ < 5) == ((List(1, 3), List(7))))
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, implement a function to take `n`
-               * elements from a list.
+               * `List#foldLeft`를 사용하여, 주어진 리스트에서 `n`개의 요소를 취하는 함수를 구현하세요.
                */
               test("take") {
                 def take[A](n: Int, list: List[A]): List[A] = ???
@@ -290,10 +271,9 @@ object Collections extends ZIOSpecDefault {
                 assertTrue(take(2, List(1, 7, 3)) == List(1, 7))
               } @@ ignore +
               /**
-               * EXERCISE
+               * 연습문제
                *
-               * Using `List#foldLeft`, implement a function to take elements
-               * from a list for as long as a predicate is satisfied.
+               * `List#foldLeft`를 사용하여, 주어진 리스트에서 조건에 맞는 요소를 취하는 함수를 구현하세요.
                */
               test("takeWhile") {
                 def takeWhile[A](list: List[A])(pred: A => Boolean): List[A] = ???
@@ -305,10 +285,9 @@ object Collections extends ZIOSpecDefault {
         suite("performance") {
 
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Investigate and fix the performance problem with this code merely
-           * by changing the collection type used.
+           * 코드의 성능 문제를 해결하기 위해, 사용된 컬렉션 타입만 변경하세요.
            */
           test("head/tail") {
             def sum(values: Seq[Int]): Int =
@@ -320,10 +299,9 @@ object Collections extends ZIOSpecDefault {
             assertTrue(sum(0 to 10000) > 0)
           } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Investigate and fix the performance problem with this code merely
-             * by changing the collection type used.
+             * 이 코드의 성능 문제를, 컬렉션 타입만 변경하여 해결해 보세요.
              */
             test("random access") {
               def sumProduct(left: Seq[Int], right: Seq[Int]): Int = {
@@ -337,10 +315,9 @@ object Collections extends ZIOSpecDefault {
               assertTrue(sumProduct(List.fill(1000)(2), List.fill(1000)(2)) > 0)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Investigate and fix the performance problem with this code merely
-             * by changing the collection type used.
+             * 이 코드의 성능 문제를, 컬렉션 타입만 변경하여 해결해 보세요.
              */
             test("containment") {
               def equivalent(left: Seq[Int], right: Seq[Int]): Boolean =
@@ -354,65 +331,60 @@ object Collections extends ZIOSpecDefault {
 }
 
 /**
- * Scala collections library is a highlight of the Scala standard library,
- * containing diverse and high-performance immutable data structures
- * equipped with dozens of helpful operators.
+ * 스칼라 컬렉션 라이브러리는 스칼라 표준 라이브러리의 핵심 기능 중 하나로,
+ * 다양하고 높은 성능을 가진 불변 데이터 구조를 제공하며,
+ * 다수의 유용한 연산자를 포함하고 있습니다.
  *
- * In this graduation project, you will gain experience using the Scala
- * collections to implement a graph data structure.
+ * 이 과제에서는 스칼라 컬렉션을 사용하여 그래프 데이터 구조를 구현하는 경험을 얻게 됩니다.
  */
 object CollectionsGraduation {
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Using other Scala collections, choose a representation for a graph
-   * whose nodes are identified by type `V`, and whose edges are
-   * identified by type `E`.
+   * 다른 스칼라 컬렉션을 사용하여, 노드가 타입 `V`로 식별되고, 간선이 타입 `E`로 식별되는 그래프의 표현을 선택하세요.
    */
   final case class Graph[E, V]() {
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to retrieve the edges connected to the specified
-     * node.
+     * 주어진 노드에 연결된 간선을 검색하는 함수를 구현하세요.
      */
     def edgesOf(v: V): Set[E] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to connect the two nodes with the specified edge.
+     * 두 노드를 지정된 간선으로 연결하는 함수를 구현하세요.
      */
     def connect(v1: V, e: E, v2: V): Graph[E, V] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to cdisonnect the two nodes from the specified edge.
+     * 지정된 간선으로 두 노드를 연결 해제하는 함수를 구현하세요.
      */
     def disconnect(v1: V, e: E, v2: V): Graph[E, V] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to return the set of all nodes in the graph.
+     * 그래프에 포함된 모든 노드의 집합을 반환하는 함수를 구현하세요.
      */
     def nodes: Set[V] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to delete the specified node.
+     * 지정된 노드를 삭제하는 함수를 구현하세요.
      */
     def delete(v: V): Graph[E, V] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement a function to fold over the nodes, passing at each node both
-     * a current state value, and the set of edges connected to the node.
+     * 노드를 순회하면서, 각 노드에 대해 현재 상태 값과 해당 노드에 연결된 간선 집합을 전달하는 함수를 구현하세요.
      */
     def fold[Z](initial: Z)(f: (Z, V, Set[E]) => Z): Z = ???
   }
