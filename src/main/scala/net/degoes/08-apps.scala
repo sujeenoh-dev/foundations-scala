@@ -19,10 +19,10 @@ final case class SearchError()
 final case class BookingError()
 
 /**
- * EXERCISE
+ * 연습문제
  *
- * Create an API with data types for searching for flights and booking
- * flights, with confirmations.
+ * 항공편 검색과 항공편 예약, 확인을 위한 데이터 타입으로
+ * API를 생성하세요.
  */
 trait FlightAPI {
   def findFlights(
@@ -40,19 +40,19 @@ final case class EmailFailure()
 final case class Email()
 
 /**
- * EXERCISE
+ * 연습문제
  *
- * Create an API with data types for sending emails.
+ * 이메일 발송을 위한 데이터 타입으로 API를 생성하세요.
  */
 trait EmailAPI {
   def sendEmail(email: Email): IO[EmailFailure, Unit]
 }
 
 /**
- * EXERCISE
+ * 연습문제
  *
- * Create a command-line, menu-driven application which allows the user to
- * search for and book flights.
+ * 사용자가 항공편을 검색하고 예약할 수 있는 명령줄 메뉴 기반
+ * 애플리케이션을 생성하세요.
  */
 object AppsGraduation extends ZIOAppDefault {
   def run =

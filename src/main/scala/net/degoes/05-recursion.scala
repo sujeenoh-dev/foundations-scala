@@ -1,14 +1,12 @@
 /**
- * One of the backbones of applications is the ability to loop: looping is
- * used both for most algorithms (such as sorting lists), as well as for
- * large-scale application behavior like repeatedly reading results from a
- * database query or repeatedly handling requests from a socket. Functional
- * applications don't use traditional loops, but instead, they use recursion,
- * which has the same power as looping but in a package that lends itself
- * to immutable data and pure functions.
+ * 애플리케이션의 기반 중 하나는 반복하는 능력입니다: 반복은 대부분의 알고리즘(리스트 정렬 등)과
+ * 데이터베이스 쿼리에서 결과를 반복적으로 읽거나 소켓에서 요청을 반복적으로 처리하는 등의
+ * 대규모 애플리케이션 동작에 사용됩니다. 함수형 애플리케이션은 전통적인 루프를 사용하지 않고,
+ * 대신 재귀를 사용합니다. 재귀는 루프와 같은 능력을 가지지만 불변 데이터와 순수 함수에
+ * 더 적합한 형태로 제공됩니다.
  *
- * In this module, you will explore using recursion to solve some of the same
- * tasks you would use looping to solve in a procedural programming language.
+ * 이 모듈에서는 절차적 프로그래밍 언어에서 루프로 해결했을 같은 작업들을 재귀로 해결하는
+ * 방법을 탐구하게 됩니다.
  */
 package net.degoes
 
@@ -21,9 +19,9 @@ object Recursion extends ZIOSpecDefault {
       suite("basics") {
 
         /**
-         * EXERCISE
+         * 연습문제
          *
-         * Using recursion, compute the sum of a list of integers.
+         * 재귀를 사용하여 정수 리스트의 합을 계산하세요.
          */
         test("sum") {
           def sum(list: List[Int]): Int = ???
@@ -31,9 +29,9 @@ object Recursion extends ZIOSpecDefault {
           assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
         } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, compute the maximum of a list of integers.
+           * 재귀를 사용하여 정수 리스트의 최대값을 계산하세요.
            */
           test("max") {
             def max(list: List[Int]): Int = ???
@@ -41,9 +39,9 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, determine if a number is prime.
+           * 재귀를 사용하여 수가 소수인지 판별하세요.
            */
           test("prime") {
             def isPrime(n: Int): Boolean = {
@@ -55,10 +53,10 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(!isPrime(4) && isPrime(7) && isPrime(11))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, compute the nth fibonacci number. The fibonacci
-           * sequence is given by, 0, 1, 1, <sum of two previous nums>...
+           * 재귀를 사용하여 n번째 피보나치 수를 계산하세요. 피보나치
+           * 수열은 0, 1, 1, <이전 두 수의 합>... 으로 정의됩니다.
            */
           test("fibs") {
             def fib(n: Int): Int = ???
@@ -66,11 +64,11 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, sort the provided list, by taking the head, and
-           * sorting those less than the head, and those not less than the
-           * head (separately), then concatenating them in the right order.
+           * 재귀를 사용하여 제공된 리스트를 정렬하세요. 헤드를 선택하고,
+           * 헤드보다 작은 것들과 작지 않은 것들을 (각각) 정렬한 다음,
+           * 올바른 순서로 연결하는 방식으로 정렬하세요.
            */
           test("pivot sort") {
             def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = ???
@@ -78,10 +76,10 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(sort(List(9, 23, 1, 5)) == List(1, 5, 9, 23))
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, implement a method to loop until a predicate is
-           * satisfied.
+           * 재귀를 사용하여 조건(predicate)이 만족될 때까지 반복하는
+           * 메서드를 구현하세요.
            */
           test("loop") {
             def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = ???
@@ -91,10 +89,10 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(inc == 10)
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Using recursion, implement a method that repeats the specified
-           * action again and again, until the predicate is true.
+           * 재귀를 사용하여 조건(predicate)이 참이 될 때까지 지정된
+           * 액션을 계속 반복하는 메서드를 구현하세요.
            */
           test("repeat") {
             var input = "John" :: "Scotty" :: "Bob" :: "Sherlock" :: Nil
@@ -118,9 +116,9 @@ object Recursion extends ZIOSpecDefault {
         suite("tail recursion") {
           // import scala.annotation.tailrec
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Write a tail-recursive version of the previous `sum`.
+           * 이전 `sum`의 꼬리 재귀 버전을 작성하세요.
            */
           test("sum") {
             // @tailrec
@@ -129,9 +127,9 @@ object Recursion extends ZIOSpecDefault {
             assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
           } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Write a tail-recursive version of the previous `max`.
+             * 이전 `max`의 꼬리 재귀 버전을 작성하세요.
              */
             test("max") {
               // @tailrec
@@ -140,9 +138,9 @@ object Recursion extends ZIOSpecDefault {
               assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Write a tail-recursive version of the previous `loop`.
+             * 이전 `loop`의 꼬리 재귀 버전을 작성하세요.
              */
             test("loop") {
               def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = ???
@@ -152,9 +150,9 @@ object Recursion extends ZIOSpecDefault {
               assertTrue(inc == 10)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Write a tail-recursive version of the previous `repeat`.
+             * 이전 `repeat`의 꼬리 재귀 버전을 작성하세요.
              */
             test("repeat") {
               var input = "John" :: "Scotty" :: "Bob" :: "Sherlock" :: Nil
@@ -174,11 +172,11 @@ object Recursion extends ZIOSpecDefault {
               assertTrue(result == "Sherlock")
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Try to find a way to write the fib sequence using tail recursion.
+             * 꼬리 재귀를 사용하여 피보나치 수열을 작성하는 방법을 찾아보세요.
              *
-             * WARNING: Advanced.
+             * 주의: 고급 문제입니다.
              */
             test("fibs") {
               def fib(n: Int): Int = ???
@@ -186,11 +184,11 @@ object Recursion extends ZIOSpecDefault {
               assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
             } @@ ignore +
             /**
-             * EXERCISE
+             * 연습문제
              *
-             * Try to find a way to write the pivot sort using tail recursion.
+             * 꼬리 재귀를 사용하여 피벗 정렬을 작성하는 방법을 찾아보세요.
              *
-             * WARNING: Advanced.
+             * 주의: 고급 문제입니다.
              */
             test("pivot sort") {
               def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = ???
@@ -202,47 +200,45 @@ object Recursion extends ZIOSpecDefault {
 }
 
 /**
- * Recursion is the general-purpose replacement for looping in functional
- * Scala. While recursion should be avoided when simpler alternatives
- * exist (e.g. foldLeft on List), when not possible, recursion provides
- * a very powerful tool that can solve the most complex iterative problems.
+ * 재귀는 함수형 스칼라에서 루프의 범용적 대체재입니다. 더 간단한 대안이
+ * 존재할 때(예: List의 foldLeft)는 재귀를 피해야 하지만, 그렇지 않은 경우
+ * 재귀는 가장 복잡한 반복 문제를 해결할 수 있는 매우 강력한 도구를 제공합니다.
  *
- * In this graduation project, you get to take a break and experiment with
- * recursion in a functional effect system as you implement a game of hangman.
+ * 이 졸업 프로젝트에서는 행맨 게임을 구현하면서 함수형 이펙트 시스템에서
+ * 재귀를 실험해 볼 수 있습니다.
  */
 object RecursionGraduation extends zio.ZIOAppDefault {
   import zio._
   import java.io.IOException
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Implement an effect that gets a single, lower-case character from
-   * the user.
+   * 사용자로부터 하나의 소문자를 받는 이펙트를 구현하세요.
    */
   lazy val getChoice: ZIO[Any, IOException, Char] = ???
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Implement an effect that prompts the user for their name, and
-   * returns it.
+   * 사용자에게 이름을 묻는 프롬프트를 표시하고 그 이름을 반환하는
+   * 이펙트를 구현하세요.
    */
   lazy val getName: ZIO[Any, IOException, String] = ???
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Implement an effect that chooses a random word from the dictionary.
-   * The dictionary is `Dictionary`.
+   * 사전에서 랜덤한 단어를 선택하는 이펙트를 구현하세요.
+   * 사전은 `Dictionary`입니다.
    */
   lazy val chooseWord: ZIO[Any, Nothing, String] = ???
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Implement the main game loop, which gets choices from the user until
-   * the game is won or lost.
+   * 게임이 이기거나 질 때까지 사용자로부터 선택을 받는 메인 게임 루프를
+   * 구현하세요.
    */
   def gameLoop(oldState: State): ZIO[Any, IOException, Unit] = ???
 
@@ -300,9 +296,9 @@ object RecursionGraduation extends zio.ZIOAppDefault {
   }
 
   /**
-   * EXERCISE
+   * 연습문제
    *
-   * Execute the main function and verify your program works as intended.
+   * 메인 함수를 실행하고 프로그램이 의도한 대로 작동하는지 확인하세요.
    */
   def run =
     for {

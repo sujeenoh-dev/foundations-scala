@@ -1,14 +1,11 @@
 /**
- * Functional Scala uses functional programming, which emphasizes composing
- * programs from expressions that are referentially transparent, with
- * functions that are total and deterministic. This property, which is
- * sometimes called _purity_, fully inverts control in a functional program,
- * allowing the caller of functions complete control, which in turn makes
- * programs easier to understand, cheaper to safely modify, and easier to
- * test.
+ * 함수형 스칼라는 함수형 프로그래밍을 사용합니다. 이는 참조 투명성을 가진 표현식으로
+ * 프로그램을 구성하는 것을 강조하며, 함수는 전역성(total)과 결정성(deterministic)을
+ * 가집니다. 이 속성은 때때로 _순수성(purity)_ 이라 불리며, 함수형 프로그램에서
+ * 제어를 완전히 역전시켜 함수 호출자에게 완전한 제어권을 제공합니다. 이는
+ * 프로그램을 이해하기 쉽게 하고, 안전하게 수정하는 비용을 줄이며, 테스트를 더 쉽게 만듭니다.
  *
- * In this module, you will explore purity and techniques for using purity
- * inside your applications.
+ * 이 모듈에서는 순수성과 애플리케이션 내에서 순수성을 사용하는 기법들을 탐구하게 됩니다.
  */
 package net.degoes
 
@@ -25,9 +22,9 @@ object Purity extends ZIOSpecDefault {
       suite("functions") {
 
         /**
-         * EXERCISE
+         * 연습문제
          *
-         * Make the following function total.
+         * 다음 함수를 전역 함수로 만드세요.
          */
         test("total 1") {
           def reduce[A](elements: List[A], f: (A, A) => A): A = {
@@ -44,9 +41,9 @@ object Purity extends ZIOSpecDefault {
           assertTrue(reduce[Int](List.empty[Int], _ + _) ne null)
         } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Make the following function total.
+           * 다음 함수를 전역 함수로 만드세요.
            */
           test("total 2") {
             type Make = String
@@ -63,9 +60,9 @@ object Purity extends ZIOSpecDefault {
             )
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Make the following function pure.
+           * 다음 함수를 순수 함수로 만드세요.
            */
           test("pure 1") {
             def normal(): Double = {
@@ -78,11 +75,11 @@ object Purity extends ZIOSpecDefault {
             assertTrue(normal() == normal())
           } @@ ignore +
           /**
-           * EXERCISE
+           * 연습문제
            *
-           * Make the following function pure.
+           * 다음 함수를 순수 함수로 만드세요.
            *
-           * WARNING: Advanced.
+           * 주의: 고급 문제입니다.
            */
           test("pure 2") {
             def getName(): String = {
@@ -97,16 +94,13 @@ object Purity extends ZIOSpecDefault {
 }
 
 /**
- * Functional programming enables an unprecedented ability to reason about
- * and test code in principled ways. The secret to this power is so-called
- * referential transparency, which involves only writing code that computes
- * values, with all functions being total, deterministic, and free of side
- * effects.
+ * 함수형 프로그래밍은 원칙에 기반한 방식으로 코드를 추론하고 테스트하는 전례 없는 능력을
+ * 제공합니다. 이 능력의 비밀은 소위 참조 투명성입니다. 이는 값을 계산하는 코드만 작성하는 것을
+ * 포함하며, 모든 함수는 전역적이고 결정적이며 부작용이 없습니다.
  *
- * In this graduation project, you will explore the limits of pure stateful
- * computation, as you build out a data type to model stateful computations,
- * and use this to update an application from procedural style to
- * functional style.
+ * 이 졸업 프로젝트에서는 상태를 가진 계산을 모델링하는 데이터 타입을 구축하고,
+ * 이를 사용하여 절차적 스타일의 애플리케이션을 함수형 스타일로 업데이트하면서
+ * 순수한 상태 계산의 한계를 탐구하게 됩니다.
  */
 object PurityGraduation extends ZIOSpecDefault {
   final case class Stateful[State, +A](compute: State => (State, A)) { self =>
@@ -114,10 +108,9 @@ object PurityGraduation extends ZIOSpecDefault {
       self.flatMap(a => Stateful.succeed(f(a)))
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement the `flatMap` method so that state is threaded through
-     * both computations.
+     * 상태가 두 계산을 관통하여 전달되도록 `flatMap` 메서드를 구현하세요.
      */
     def flatMap[B](f: A => Stateful[State, B]): Stateful[State, B] = ???
 
@@ -130,24 +123,23 @@ object PurityGraduation extends ZIOSpecDefault {
   object Stateful {
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement the `succeed` method in a way that does not change
-     * state.
+     * 상태를 변경하지 않는 방식으로 `succeed` 메서드를 구현하세요.
      */
     def succeed[S, A](a: => A): Stateful[S, A] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement `get` to return the state unmodified.
+     * 상태를 수정하지 않고 반환하는 `get`을 구현하세요.
      */
     def get[S]: Stateful[S, S] = ???
 
     /**
-     * EXERCISE
+     * 연습문제
      *
-     * Implement `set` to set the state and return unit.
+     * 상태를 설정하고 unit을 반환하는 `set`을 구현하세요.
      */
     def set[S](s: S): Stateful[S, Unit] = ???
 
@@ -166,8 +158,8 @@ object PurityGraduation extends ZIOSpecDefault {
   )
 
   /**
-   * Port this procedural example to functional Scala by using the `Stateful`
-   * data type that you constructed above.
+   * 위에서 구성한 `Stateful` 데이터 타입을 사용하여 이 절차적 예제를
+   * 함수형 스칼라로 이식하세요.
    */
   def render(element: Element): String = {
     var output: String = ""
