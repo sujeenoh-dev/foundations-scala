@@ -15,7 +15,7 @@ import zio._
 import zio.test._
 import zio.test.TestAspect._
 
-object Data extends ZIOSpecDefault {
+object DataAnswer extends ZIOSpecDefault {
   type ???
 
   def spec =
@@ -29,79 +29,88 @@ object Data extends ZIOSpecDefault {
          */
 
         /**
-         * 연습문제
+         * 연습문제-01
          *
          * 클래스의 모든 생성자 매개변수에 대해 자동으로 getter를 생성하기 위해 `Person` 케이스 클래스를 생성하세요.
          */
         test("fields") {
-          class Person(name: String, age: Int) // TODO
+          case class Person(name: String, age: Int)
 
-          def getName(p: Person): String = ??? // TODO
-          def getAge(p: Person): Int     = ??? // TODO
+          def getName(p: Person): String = p.name
+          def getAge(p: Person): Int     = p.age
 
-          val holmes = new Person("Sherlock Holmes", 42) // TODO
+          val holmes = Person("Sherlock Holmes", 42)
 
           assertTrue(getName(holmes) == "Sherlock Holmes" && getAge(holmes) == 42)
         } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-02
            *
-           * 이름(String)과 나이(Int)를 가진 `Person` 케이스 클래스를 생성하고, 가짜 생성자를 변경하여 모든 케이스 클래스가 컴패니언 객체에서 받는 자동 생성자를 만드세요.
+           * 이름(String)과 수량(Int)를 가진 `Recipe` 케이스 클래스를 생성하고, 가짜 생성자를 변경하여 모든 케이스 클래스가 컴패니언 객체에서 받는 자동 생성자를 만드세요.
            */
           test("apply") {
-            object Person {
-              def apply(name: String, age: Int) = ??? // TODO
+            case class Recipe(name: String, quantity: Int)
+
+            object Recipe {
+              def apply(name: String, quantity: Int) = Recipe(
+                name = name,
+                quantity = quantity
+              )
             }
 
-            assertTrue(Person("Sherlock Holmes", 42) == Person("Sherlock Holmes", 42))
+            assertTrue(Recipe("Sweet Potato", 42) == Person("Sweet Potato", 42))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-03
            *
            * `Profile` 클래스를 케이스 클래스로 변환하여 동등성(equality)이 자동 구현된 것을 확인하세요.
            */
           test("equals") {
-            class Profile(val age: Int) // TODO
+            case class Profile(age: Int)
 
-            assertTrue(new Profile(42) == new Profile(42)) // TODO
+            assertTrue(Profile(42) == Profile(42))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-04
            *
            * `CreditCard` 클래스를 케이스 클래스로 변환하여 해시 코드가 자동 구현된 것을 확인하세요.
            */
           test("hashCode") {
-            class CreditCard(val number: String) // TODO
+            case class CreditCard(val number: String)
 
-            assertTrue(new CreditCard("123").hashCode == new CreditCard("123").hashCode) // TODO
+            assertTrue(CreditCard("123").hashCode == CreditCard("123").hashCode)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-05
            *
            * `Address` 클래스를 케이스 클래스로 변환하여 `toString`이 자동 구현된 것을 확인하세요.
            */
           test("toString") {
-            class Address(val street: String) // TODO
+            case class Address(val street: String)
 
-            assertTrue(new Address("221B Baker Street").toString == "Address(221B Baker Street)") // TODO
+            assertTrue(Address("221B Baker Street").toString == "Address(221B Baker Street)")
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-06
            *
            * `Permissions` 클래스를 케이스 클래스로 변환하여 `copy`가 자동 구현된 것을 확인하세요.
            */
           test("copy") {
-            class Permissions(val canRead: Boolean, canWrite: Boolean, canShare: Boolean) { // TODO
+            case class Permissions(canRead: Boolean, canWrite: Boolean, canShare: Boolean) {
               def copy(
-                canRead: Boolean = this.canRead,
-                canWrite: Boolean = this.canWrite,
-                canShare: Boolean = this.canShare
-              ): Permissions = ???
+                canRead: Boolean = canRead,
+                canWrite: Boolean = canWrite,
+                canShare: Boolean = canShare
+              ): Permissions = copy(
+                canRead = canRead,
+                canWrite = canWrite,
+                canShare = canShare
+              )
             }
 
-            val perms = new Permissions(true, false, false) // TODO
+            val perms = Permissions(true, false, false)
 
-            assertTrue(perms.copy(canRead = false) == new Permissions(false, false, false)) // TODO
+            assertTrue(perms.copy(canRead = false) == Permissions(false, false, false))
           } @@ ignore +
           suite("patterns") {
             /**
@@ -118,19 +127,21 @@ object Data extends ZIOSpecDefault {
               */
 
             /**
-             * 연습문제
+             * 연습문제-07
              *
              * 패턴 매칭을 사용하여 `Address`의 `street`을 추출하세요.
              */
             test("simple") {
               final case class Address(street: String)
 
-              def extractStreet(address: Address): String = ??? // TODO
+              def extractStreet(address: Address): String = address match {
+                case Address(street) => street
+              }
 
               assertTrue(extractStreet(Address("221B Baker")) == "221B Baker")
             } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-08
                *
                * 패턴 매칭을 사용하여 `Address`의 `postalCode`를 추출하세요.
                * 와일드카드를 사용하여 `street`을 무시(어떤 값이든 매칭)하세요.
@@ -138,12 +149,14 @@ object Data extends ZIOSpecDefault {
               test("wildcard") {
                 final case class Address(street: String, postalCode: String)
 
-                def extractPostalCode(address: Address): String = ??? // TODO
+                def extractPostalCode(address: Address): String = address match {
+                  case Address(_, postalCode) => postalCode
+                }
 
                 assertTrue(extractPostalCode(Address("221B Baker", "NW1 6XE")) == "NW1 6XE")
               } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-09
                *
                * 상수에 대한 패턴 매칭을 사용하여 제공된 함수를 구현하세요.
                * 우편번호에 관계없이 "221B Baker"와 일치하는 모든 거리에 대해
@@ -152,12 +165,15 @@ object Data extends ZIOSpecDefault {
               test("constant") {
                 final case class Address(street: String, postalCode: String)
 
-                def is221B(address: Address): Boolean = ??? // TODO
+                def is221B(address: Address): Boolean = address match {
+                  case ("221B Baker", _) => true
+                  case _ => false
+                }
 
                 assertTrue(is221B(Address("221B Baker", "NW1 6XE")))
               } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-10
                *
                * 패턴 매칭에서 여러 개의 순서가 있는 케이스 절을 사용하여
                * 제공된 함수를 구현하세요. "Baker" 거리의 모든 주소에 대해
@@ -167,12 +183,15 @@ object Data extends ZIOSpecDefault {
               test("ordered") {
                 final case class Address(number: String, street: String, postalCode: String)
 
-                def neighbor(address: Address): String = ??? // TODO
+                def neighbor(address: Address): String = address.street match {
+                  case "Baker" => "Knows Holmes"
+                  case _ => "Unknown"
+                }
 
                 assertTrue(neighbor(Address("220", "Baker", "NW1 6XE")) == "Knows Holmes")
               } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-11
                *
                * 조건부 패턴을 사용하여 제공된 함수를 구현하세요. (conditional patterns)
                * "Baker"를 포함하는 모든 거리에 대해 true를 반환해야 합니다.
@@ -180,12 +199,15 @@ object Data extends ZIOSpecDefault {
               test("conditional") {
                 final case class Address(street: String, postalCode: String)
 
-                def isBaker(address: Address): Boolean = ??? // TODO
+                def isBaker(address: Address): Boolean = address.street {
+                  case street if street.contains("Baker") => true
+                  case _ => false
+                }
 
                 assertTrue(isBaker(Address("220 Baker", "NW1 6XE")))
               } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-12
                *
                * 중첩된 패턴을 사용하여 제공된 함수를 구현하세요. (nested patterns)
                * 모든 사람의 우편번호를 추출해야 합니다.
@@ -194,14 +216,18 @@ object Data extends ZIOSpecDefault {
                 final case class Person(name: String, address: Address)
                 final case class Address(street: String, postalCode: String)
 
-                def extractPostalCode(person: Person): String = ??? // TODO
+                def extractPostalCode(person: Person): String = person match {
+                  case Person(_, address) => address match {
+                    case Address(_, postalCode) => postalCode
+                  }
+                }
 
                 val sherlock = Person("Sherlock Holmes", Address("221B Baker", "NW1 6XE"))
 
                 assertTrue(extractPostalCode(sherlock) == "NW1 6XE")
               } @@ ignore +
               /**
-               * 연습문제
+               * 연습문제-13
                *
                * 입력된 address.street가 `sherlockStreet`와 일치하면 true를 반환하세요.
                */
@@ -210,9 +236,9 @@ object Data extends ZIOSpecDefault {
 
                 val sherlockStreet = "Baker"
 
-                val _ = sherlockStreet
-
-                def isSherlockStreet(address: Address): Boolean = ??? // TODO
+                def isSherlockStreet(address: Address): Boolean = address match {
+                  case Address(_, street, _) => street == sherlockStreet
+                }
 
                 val address = Address("220", "Baker", "NW1 6XE")
 
@@ -237,7 +263,7 @@ object Data extends ZIOSpecDefault {
            */
 
           /**
-           * 연습문제
+           * 연습문제-14
            *
            * 다음 trait를 sealed로 만들어 패턴 매칭으로 아래 빈칸을 채워보세요.
            */
@@ -251,44 +277,31 @@ object Data extends ZIOSpecDefault {
             val _ = Blue
             val _ = Red
 
-            val isRed: Color => Boolean = {
-              case _ => ???
+            val isRed: Color => Boolean =  color match {
+              case Color.Red => true
+              case _ => false
             }
 
             assertTrue(!isRed(Blue))
           } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-15
              *
-             * `UK`, `Germany`, `India`, `Netherlands`, `USA` 케이스 객체로 확장되는 sealed trait `Country`를 생성하세요.
+             * `UK`, `USA` 케이스 객체로 확장되는 sealed trait `Country`를 생성하세요.
              */
             test("country") {
-              trait Country
-              object UK
-              object USA
+              sealed trait Country
+              object UK extends Country
+              object USA extends Country
 
               def isCountry(a: Any) = a.isInstanceOf[Country]
 
               assertTrue(isCountry(UK) && isCountry(USA))
             } @@ ignore +
             /**
-             * 스칼라의 패턴 매칭에서 **as 패턴(as pattern)**은, 패턴으로 값을 분해하면서 분해한 값 전체를 그대로 별도의 이름으로도 저장하고 싶을 때 사용하는 문법입니다.
-             *  즉, 내부 값도 꺼내고 싶고, 동시에 원래 값 전체도 변수로 가지고 있고 싶을 때 쓰는 패턴입니다.
-             * ```scala
-             * sealed trait Shape
-             * case class Rectangle(width: Double, height: Double) extends Shape
-             * 
-             * def describe(shape: Shape): String = shape match {
-             *   case rect @ Rectangle(w, h) if w == h =>
-             *     s"Square detected: $rect"
-             *   case Rectangle(w, h) =>
-             *     s"Rectangle of width $w and height $h"
-             * }
-             * ```
-             * 
-             * 연습문제
+             * 연습문제-16
              *
-             * `asCreditCard` 메서드를 구현할 때 `as` 패턴을 사용하여
+             * `asCreditCard` 메서드를 구현할 때 `as` 메서드을 사용하여
              * `CreditCard` 결제 방법에 대해 매칭하고, 변수로 캡처한 후
              * `Some(_)` 생성자로 감싸서 반환하세요. 다른 결제 방법의 경우
              * `None`을 반환하세요.
@@ -301,42 +314,68 @@ object Data extends ZIOSpecDefault {
 
               val _ = PayPal("")
 
-              def asCreditCard(paymentMethod: PaymentMethod): Option[CreditCard] = ???
+              def asCreditCard(paymentMethod: PaymentMethod): Option[CreditCard] = paymentMethod match {
+                case pp: PayPal => pp.as(None)
+                case cc: CreditCard => cc.as(Some)
+              }
 
               val cc: CreditCard = CreditCard("123123123123", java.time.YearMonth.of(1984, 12), 123)
 
               assertTrue(asCreditCard(cc) == Option(cc))
             }
+            /*
+             * 패턴 매칭에서 **as 패턴(as pattern)**은, 패턴으로 값을 분해하면서 분해한 값 전체를 그대로 별도의 이름으로도 저장하고 싶을 때 사용하는 문법입니다.
+             *  즉, 내부 값도 꺼내고 싶고, 동시에 원래 값 전체도 변수로 가지고 있고 싶을 때 쓰는 패턴입니다.
+             * ```scala
+             * sealed trait Shape
+             * case class Rectangle(width: Double, height: Double) extends Shape
+             * 
+             * def describe(shape: Shape): String = shape match {
+             *   case rect @ Rectangle(w, h) if w == h =>
+             *     s"Square detected: $rect"
+             *   case Rectangle(w, h) =>
+             *     s"Rectangle of width $w and height $h"
+             * }
+             * ```
+             * 기억해두면 가끔 유용합니다.
+             */
         } +
         suite("Modeling") {
 
           /**
-           * 연습문제
+           * 연습문제-17
            *
-           * 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
+           * enum 키워드를 이용하여 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
            */
           test("example 1") {
-            type RelationshipStatus = ???
+            enum RelationshipStatus {
+              object Married
+              object Divorced
+              object Single
+            }
 
-            def makeMarried: RelationshipStatus = ???
+            def makeMarried: RelationshipStatus = RelationShipStatus.Married
 
-            def makeSingle: RelationshipStatus = ???
+            def makeSingle: RelationshipStatus = RelationShipStatus.Single
 
             assertTrue(makeMarried != makeSingle)
           } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-18
              *
              * 연결 URL, 데이터 형식(JSON 또는 XML), API 토큰(문자열)을 저장하는 `PaymentProcessorAPI`의 데이터 모델을 만드세요.
              */
             test("example 2") {
-              type PaymentProcessorAPI = ???
-              type DataFormat          = ???
+              case class PaymentProcessorAPI(url: java.net.URI, df: DataFormat, apiToken: String)
+              enum DataFormat {
+                object JSON
+                object XML
+              }
 
-              def define(url: java.net.URI, df: DataFormat, apiToken: String): PaymentProcessorAPI = ???
+              def define(url: java.net.URI, df: DataFormat, apiToken: String): PaymentProcessorAPI = PaymentProcessorAPI(url, df, apiToken)
 
               val url              = new java.net.URI("https://stripe.com")
-              def json: DataFormat = ???
+              def json: DataFormat = DataFormat.JSON
 
               val api1 = define(url, json, "123123")
               val api2 = define(url, json, "123124")
@@ -344,29 +383,34 @@ object Data extends ZIOSpecDefault {
               assertTrue(api1 == api1 && api1 != api2)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-19
              *
              * 사용자의 암호화폐 포트폴리오에 대한 데이터 모델을 생성하세요.
              */
             test("example 3") {
-              type Portfolio = ???
+              case class Portfolio(symbol: Symbol, amount: Double)
 
-              type Symbol = ???
+              enum Symbol {
+                object ETH
+                object BTC
+              }
 
-              def ETH: Symbol = ???
-              def BTC: Symbol = ???
+              def ETH: Symbol = Symbol.ETH
+              def BTC: Symbol = Symbol.BTC
 
-              def add(portfolio: Portfolio, symbol: Symbol, amount: Double): Portfolio = ???
+              def add(portfolio: Portfolio, symbol: Symbol, amount: Double): Portfolio = 
+                if (portfolio.symbol == symbol) portfolio.copy(amount = portfolio.amount + amount)
+                else portfolio
 
-              def empty: Portfolio = ???
+              def empty(symbol: Symbol): Portfolio = Portfolio(symbol, 0d)
 
-              val p1 = add(add(add(empty, ETH, 1.0), ETH, 1.0), BTC, 2.0)
-              val p2 = add(add(empty, BTC, 2.0), ETH, 2.0)
+              val p1 = add(add(add(empty(Symbol.ETC), ETH, 1.0), ETH, 1.0), BTC, 2.0)
+              val p2 = add(add(empty(Symbol.ETC), BTC, 2.0), ETH, 2.0)
 
               assertTrue(p1 == p2)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-20
              *
              * SaaS 제품에 대한 구독의 데이터 모델을 생성하세요.
              * 연간 또는 월간 수준일 수 있고, 계획에 다양한 기능을 번들로 포함할 수 있습니다.
@@ -383,7 +427,7 @@ object Data extends ZIOSpecDefault {
               assertTrue(makeMonthly(9.99, features) != makeAnnually(9.99, features))
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-21
              *
              * 이름과 필드 타입을 포함하는 필드의 데이터 모델을 생성하세요. 
              * 필드 타입은 정수, 문자열, 불린 또는 폼의 필드에 대한 기타 일반적인 타입일 수 있습니다.
@@ -417,7 +461,7 @@ object Data extends ZIOSpecDefault {
  * 이 졸업 프로젝트에서는 케이스 클래스와 sealed trait를 사용하여 정확한
  * 데이터 모델을 구성하는 경험을 얻게 됩니다.
  */
-object DataGraduation extends ZIOAppDefault {
+object DataGraduationAnswer extends ZIOAppDefault {
 
   sealed trait Command
   object Command {

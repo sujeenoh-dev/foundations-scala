@@ -13,13 +13,13 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Collections extends ZIOSpecDefault {
+object CollectionsAnswer extends ZIOSpecDefault {
   def spec =
     suite("Collections") {
       suite("operations") {
 
         /**
-         * 연습문제
+         * 연습문제-01
          *
          * `List#foreach`를 사용하여, 주어진 리스트의 모든 값을 변수 `sum`에 더하세요.
          */
@@ -28,61 +28,57 @@ object Collections extends ZIOSpecDefault {
 
           val list = List(0, 3, 0, 2, 1)
 
-          list.foreach { _ =>
-            sum += 0
-          }
+          list.foreach(sum += _)
 
           assertTrue(sum == 6)
         } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-02
            *
            * `List#map`을 사용하여, 주어진 리스트의 각 요소를 2배로 곱한 새로운 리스트로 변환하세요.
            */
           test("map") {
             val list1 = List(0, 3, 0, 2, 1)
 
-            val list2 = list1.map(i => i) // EDIT HERE
+            val list2 = list1.map(_ * 2)
 
             assertTrue(list2.sum == 12 && list2.length == list1.length)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-03
            *
            * `List#filter`를 사용하여, 주어진 리스트에서 짝수만 남도록 필터링하세요.
            */
           test("filter") {
             val isEven = (i: Int) => i % 2 == 0
 
-            val _ = isEven
-
             val list1 = List(0, 3, 0, 2, 1)
 
-            val list2 = list1.filter(_ => true) // EDIT HERE
+            val list2 = list1.filter(isEven)
 
             assertTrue(list2 == List(0, 0, 2))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-04
            *
            * `List#take`을 사용하여, 주어진 리스트의 앞에서 2개의 요소만 취하세요.
            */
           test("take") {
             val list1 = List(1, 2, 3, 4)
 
-            val list2 = list1
+            val list2 = list1.take(2)
 
             assertTrue(list2 == List(1, 2))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-05
            *
            * `List#takeWhile`을 사용하여, 요소가 3보다 작은 동안만 리스트에서 값을 취하세요.
            */
           test("takeWhile") {
             val list1 = List(1, 2, 0, 3, 1, 2)
 
-            val list2 = list1
+            val list2 = list1.takeWhile(_ < 3)
 
             assertTrue(list2 == List(1, 2, 0))
           } @@ ignore +

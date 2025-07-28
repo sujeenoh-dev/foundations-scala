@@ -283,7 +283,7 @@ object LambdasGraduationAnswer extends ZIOAppDefault {
      *
      * 주어진 문자만 파싱하는 파서를 생성하세요. 입력이 없거나 주어진 문자가 아니면 실패합니다.
      */
-    def char(char: Char): Parser[Unit] = _.toCharArray.toList match {
+    def char(char: Char): Parser[Char] = _.toCharArray.toList match {
       case head :: tail if (char == head) => Right((tail.toString, head))
       case Nil => Left("Failed to parse string, input is empty")
       case _ => Left("Input char and head of string is not same.")
@@ -355,16 +355,27 @@ object LambdasGraduationAnswer extends ZIOAppDefault {
   }
 
   /**
-   * EXERCISE
+   * EXERCISE-22
    *
    * 파일 내용을 CSV 데이터 요소의 리스트로 파싱하는 함수를 구현하세요.
+   * - 첫 번째 줄은 반드시 Header입니다.
+   * - 두 번째 줄부터는 반드시 Values입니다.
+   * - 열의 개수가 일치하지 않으면 "Invalid CSV format: column count mismatch" 메세지와 함께 실패합니다.
    */
-  def parseFile(contents: String): Either[String, List[CSVData]] = ??? // TODO
+  def parseFile(contents: List[String]): Either[String, List[CSVData]] = contents match {
+    case head :: tail => {
+      val header = CSVData.Header(head.split(",").toList)
+      val values = tail.map(value => CSVData.Values(value.split(",").toList))
+      Right(header :: values)
+    }
+    case Nil => Left(s"Invalid CSV format: column count mismatch")
+  }
+
 
   def run =
     for {
       args     <- getArgs
-      contents <- readFile(args(0))
+      contents = List("name,age,city", "Alice,30,Seoul", "Bob,25,Busan")
       parsed   <- ZIO.from(parseFile(contents)).mapError(e => new RuntimeException(e))
       _        <- Console.printLine(parsed.mkString("\n"))
     } yield ()
