@@ -16,7 +16,6 @@ import zio.test._
 import zio.test.TestAspect._
 
 object DataAnswer extends ZIOSpecDefault {
-  type ???
 
   def spec =
     suite("Data") {
@@ -34,10 +33,13 @@ object DataAnswer extends ZIOSpecDefault {
          * 클래스의 모든 생성자 매개변수에 대해 자동으로 getter를 생성하기 위해 `Person` 케이스 클래스를 생성하세요.
          */
         test("fields") {
+          // Case classes are the foundation of data modeling in functional Scala
+          // They automatically provide: getters, equals, hashCode, toString, copy
           case class Person(name: String, age: Int)
 
-          def getName(p: Person): String = p.name
-          def getAge(p: Person): Int     = p.age
+          // These getter functions work because case class fields are public by default
+          def getName(p: Person): String = p.name  // Direct field access - no getter method needed!
+          def getAge(p: Person): Int     = p.age   // Case classes make fields accessible
 
           val holmes = Person("Sherlock Holmes", 42)
 
@@ -341,7 +343,7 @@ object DataAnswer extends ZIOSpecDefault {
           /**
            * 연습문제-17
            *
-           * enum 키워드를 이용하여 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
+           * 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
            */
           test("example 1") {
             sealed trait RelationshipStatus
@@ -384,7 +386,7 @@ object DataAnswer extends ZIOSpecDefault {
              * 연습문제-19
              *
              * 사용자의 암호화폐 포트폴리오에 대한 데이터 모델을 생성하세요.
-             * Symbol이 같은 경우에만 포트폴리오를 추가할 수 있습니다.
+             * Symbol이 같은 경우에만 포트폴리오에 값을 더할 수 있습니다.
              */
             test("example 3") {
               case class Portfolio(symbol: Symbol, amount: Double)
@@ -411,77 +413,4 @@ object DataAnswer extends ZIOSpecDefault {
             } @@ ignore
         }
     }
-}
-
-/**
- * 많은 프로그래밍 언어가 케이스 클래스와 같은 구성을 가지고 있지만,
- * sealed trait의 힘을 가진 언어는 거의 없고, 대부분이 스칼라의 패턴 매칭
- * 기능을 가지고 있지 않습니다. 이러한 강력한 기능들의 조합으로, 런타임 오류를
- * 제거하고 코드를 테스트하고 유지보수하기를 이전보다 쉽게 만드는 매우 정확한
- * 데이터 모델을 구성할 수 있습니다.
- *
- * 이 졸업 프로젝트에서는 케이스 클래스와 sealed trait를 사용하여 정확한
- * 데이터 모델을 구성하는 경험을 얻게 됩니다.
- */
-object DataGraduationAnswer extends ZIOAppDefault {
-
-  sealed trait Command
-  object Command {
-    case object Exit                        extends Command
-    final case class Look(what: String)     extends Command
-    final case class Go(where: String)      extends Command
-    final case class Take(what: String)     extends Command
-    final case class Drop(what: String)     extends Command
-    final case class Fight(who: String)     extends Command
-    final case class TalkTo(who: String)    extends Command
-    final case class Unknown(input: String) extends Command
-
-    def fromString(input: String): Command =
-      input.trim.toLowerCase.split("\\w+").toList match {
-        case exit :: Nil                  => Exit
-        case "look" :: what :: Nil        => Look(what)
-        case "go" :: where :: Nil         => Go(where)
-        case "take" :: what :: Nil        => Take(what)
-        case "drop" :: what :: Nil        => Drop(what)
-        case "fight" :: who :: Nil        => Fight(who)
-        case "talk" :: "to" :: who :: Nil => TalkTo(who)
-        case _                            => Unknown(input)
-      }
-  }
-
-  /**
-   * 연습문제
-   *
-   * 텍스트 기반 롤플레잉 게임의 게임 월드 상태에 대한 데이터 모델을 구성하세요. 
-   * 데이터 모델은 플레이어 캐릭터, 게임 월드의 지도, 게임 월드의 아이템과 캐릭터, 그리고 게임과 관련된 기타 모든 것을 표현해야 합니다.
-   */
-  final case class State(playerName: String)
-
-  final case class Step(nextState: Option[State], output: String)
-
-  /**
-   * 연습문제
-   *
-   * 사용자로부터 읽은 현재 명령과 이전 상태 모두에서 게임 월드의 새로운 상태가 구성되도록 `nextStep` 함수를 구현하세요.
-   */
-  def nextStep(state: State, command: Command): Step = ???
-
-  def mainLoop(ref: Ref[State]) =
-    (for {
-      line    <- Console.readLine
-      command = Command.fromString(line)
-      state   <- ref.get
-      step    = nextStep(state, command)
-      cont    <- step.nextState.fold(ZIO.succeed(false))(ref.set(_).as(true))
-      _       <- Console.printLine(step.output)
-    } yield cont).repeatWhile(cont => cont == true)
-
-  def run =
-    for {
-      _     <- Console.printLine("Welcome to the game! What is your name?")
-      name  <- Console.readLine
-      state = State(name)
-      ref   <- Ref.make(state)
-      _     <- mainLoop(ref)
-    } yield ()
 }

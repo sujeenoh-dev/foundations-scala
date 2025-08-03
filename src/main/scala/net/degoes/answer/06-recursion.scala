@@ -1,12 +1,26 @@
 /**
- * 애플리케이션의 기반 중 하나는 반복하는 능력입니다: 반복은 대부분의 알고리즘(리스트 정렬 등)과
- * 데이터베이스 쿼리에서 결과를 반복적으로 읽거나 소켓에서 요청을 반복적으로 처리하는 등의
- * 대규모 애플리케이션 동작에 사용됩니다. 함수형 애플리케이션은 전통적인 루프를 사용하지 않고,
- * 대신 재귀를 사용합니다. 재귀는 루프와 같은 능력을 가지지만 불변 데이터와 순수 함수에
- * 더 적합한 형태로 제공됩니다.
- *
- * 이 모듈에서는 절차적 프로그래밍 언어에서 루프로 해결했을 같은 작업들을 재귀로 해결하는
- * 방법을 탐구하게 됩니다.
+ * **재귀: 함수형 프로그래밍의 반복문**
+ * 
+ * 지금까지 우리는 데이터를 모델링하고(case class, sealed trait), 
+ * 안전한 타입을 사용하고(Option, Try, Either), 
+ * 컬렉션으로 데이터를 처리하는 방법을 배웠습니다.
+ * 
+ * 하지만 때로는 더 직접적인 제어가 필요합니다. 예를 들어:
+ * - 복잡한 알고리즘 구현 (정렬, 탐색)
+ * - 트리나 그래프 같은 중첩된 구조 처리
+ * - 컬렉션 메서드로는 표현하기 어려운 로직
+ * 
+ * 함수형 프로그래밍에서는 전통적인 for/while 루프 대신 **재귀**를 사용합니다.
+ * 재귀의 장점:
+ * - 불변 데이터와 잘 어울림 (var 없이도 반복 가능)
+ * - 수학적 정의와 유사해서 이해하기 쉬움
+ * - 복잡한 데이터 구조를 자연스럽게 처리
+ * 
+ * **재귀의 기본 패턴:**
+ * 1. **종료 조건(Base case)**: 더 이상 재귀하지 않는 경우
+ * 2. **재귀 호출(Recursive case)**: 문제를 작게 만들어서 자기 자신을 호출
+ * 
+ * 이 모듈에서는 단순한 재귀부터 시작해서 꼬리재귀까지 단계적으로 배워봅시다.
  */
 package net.degoes
 
@@ -262,115 +276,4 @@ object RecursionAnswer extends ZIOSpecDefault {
             } @@ ignore
         }
     }
-}
-
-/**
- * 재귀는 함수형 스칼라에서 루프의 범용적 대체재입니다. 더 간단한 대안이
- * 존재할 때(예: List의 foldLeft)는 재귀를 피해야 하지만, 그렇지 않은 경우
- * 재귀는 가장 복잡한 반복 문제를 해결할 수 있는 매우 강력한 도구를 제공합니다.
- *
- * 이 졸업 프로젝트에서는 행맨 게임을 구현하면서 함수형 이펙트 시스템에서
- * 재귀를 실험해 볼 수 있습니다.
- */
-object RecursionGraduationAnswer extends zio.ZIOAppDefault {
-  import zio._
-  import java.io.IOException
-
-  /**
-   * 연습문제
-   *
-   * 사용자로부터 하나의 소문자를 받는 이펙트를 구현하세요.
-   */
-  lazy val getChoice: ZIO[Any, IOException, Char] = ???
-
-  /**
-   * 연습문제
-   *
-   * 사용자에게 이름을 묻는 프롬프트를 표시하고 그 이름을 반환하는
-   * 이펙트를 구현하세요.
-   */
-  lazy val getName: ZIO[Any, IOException, String] = ???
-
-  /**
-   * 연습문제
-   *
-   * 사전에서 랜덤한 단어를 선택하는 이펙트를 구현하세요.
-   * 사전은 `Dictionary`입니다.
-   */
-  lazy val chooseWord: ZIO[Any, Nothing, String] = ???
-
-  /**
-   * 연습문제
-   *
-   * 게임이 이기거나 질 때까지 사용자로부터 선택을 받는 메인 게임 루프를
-   * 구현하세요.
-   */
-  def gameLoop(oldState: State): ZIO[Any, IOException, Unit] = ???
-
-  def renderState(state: State): ZIO[Any, IOException, Unit] = {
-
-    /**
-     *
-     *  f     n  c  t  o
-     *  -  -  -  -  -  -  -
-     *
-     *  Guesses: a, z, y, x
-     *
-     */
-    val word =
-      state.word.toList
-        .map(c => if (state.guesses.contains(c)) s" $c " else "   ")
-        .mkString("")
-
-    val line = List.fill(state.word.length)(" - ").mkString("")
-
-    val guesses = " Guesses: " + state.guesses.mkString(", ")
-
-    val text = word + "\n" + line + "\n\n" + guesses + "\n"
-
-    Console.printLine(text)
-  }
-
-  final case class State(name: String, guesses: Set[Char], word: String) {
-    final def failures: Int = (guesses -- word.toSet).size
-
-    final def playerLost: Boolean = failures > 10
-
-    final def playerWon: Boolean = (word.toSet -- guesses).isEmpty
-
-    final def addChar(char: Char): State = copy(guesses = guesses + char)
-  }
-
-  final case class Step(output: String, keepPlaying: Boolean, state: State)
-
-  def analyzeChoice(
-    oldState: State,
-    char: Char
-  ): Step = {
-    val newState = oldState.addChar(char)
-
-    if (oldState.guesses.contains(char))
-      Step("You already guessed this character!", true, newState)
-    else if (newState.playerWon)
-      Step("Congratulations, you won!!!", false, newState)
-    else if (newState.playerLost)
-      Step(s"Sorry, ${oldState.name}, you lost. Try again soon!", false, newState)
-    else if (oldState.word.contains(char))
-      Step(s"Good work, ${oldState.name}, you got that right! Keep going!!!", true, newState)
-    else Step(s"Uh, oh! That choice is not correct. Keep trying!", true, newState)
-  }
-
-  /**
-   * 연습문제
-   *
-   * 메인 함수를 실행하고 프로그램이 의도한 대로 작동하는지 확인하세요.
-   */
-  def run =
-    for {
-      name  <- getName
-      word  <- chooseWord
-      state = State(name, Set(), word)
-      _     <- renderState(state)
-      _     <- gameLoop(state)
-    } yield ()
 }

@@ -1,12 +1,35 @@
 /**
- * Tony Hoare는 null을 "10억 달러 실수"라고 부르는 것으로 유명합니다.
- * 실제로는 null이 운영 소프트웨어에 가하는 비용이 훨씬 더 높습니다.
- * 함수형 Scala에서는 null 값을 사용하지 않고, 대신 컴파일 타임에
- * 정보를 전달하는 데이터 타입으로 선택성(optionality)을 표현합니다.
- * 이러한 결정은 NullPointerException을 방지하며, 결과적으로
- * 더 잘 정의된 오류 처리와 더 안정적인 애플리케이션을 만들어냅니다.
- *
- * 이 모듈에서는 null을 option으로 대체하는 방법을 배웁니다.
+ * **null의 문제점을 이해하고 Option으로 해결하기**
+ * 
+ * 모든 프로그래머가 한 번쯤은 만나게 되는 오류가 있습니다: NullPointerException
+ * 이 오류는 값이 없다는 것을 나타내기 위해 null을 사용할 때 발생합니다.
+ * 
+ * 문제의 예시:
+ * ```scala
+ * val name: String = getName()  // null을 반환할 수 있음
+ * println(name.length)          // 💥 NullPointerException!
+ * ```
+ * 
+ * **null의 근본적인 문제들:**
+ * 1. **타입 시스템이 거짓말한다**: `String` 타입이라고 했는데 실제로는 null일 수 있음
+ * 2. **컴파일러가 도와줄 수 없다**: null 체크를 깜빠뜨려도 컴파일 에러가 나지 않음  
+ * 3. **런타임에 터진다**: 프로그램이 실행 중에 갑자기 크래시 남
+ * 
+ * **Scala의 해결책: Option 타입**
+ * Option은 "값이 있을 수도 있고 없을 수도 있다"는 상황을 타입으로 명확히 표현합니다:
+ * - `Some(value)`: 값이 있는 경우
+ * - `None`: 값이 없는 경우
+ * 
+ * ```scala
+ * val name: Option[String] = getName()  // 명확히 "값이 없을 수 있다"고 표현
+ * name match {
+ *   case Some(actualName) => println(actualName.length)  // 안전하게 사용
+ *   case None => println("이름이 없습니다")
+ * }
+ * ```
+ * 
+ * Tony Hoare(null을 발명한 사람)는 null을 "10억 달러 실수"라고 부르며 후회했습니다.
+ * 이 모듈에서는 null 대신 Option을 사용하여 안전하고 명확한 코드를 작성하는 방법을 배웁니다.
  */
 package net.degoes
 

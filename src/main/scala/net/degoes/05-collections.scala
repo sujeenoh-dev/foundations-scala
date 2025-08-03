@@ -1,12 +1,28 @@
 /**
- * for 루프는 다른 프로그래밍 언어에서 흔히 사용됩니다.
- * 하지만 함수형 스칼라에서는 대부분의 for 루프가 스칼라 컬렉션의 연산으로 대체됩니다.
- * 이 연산들은 데이터 처리와 변환에 관련된 많은 문제를 고수준이면서 선언적으로 해결할 수 있게 해줍니다.
- * 스칼라 컬렉션 라이브러리를 잘 활용하면 생산성을 크게 높일 수 있을 뿐만 아니라,
- * 함수형 프로그래머가 자주 사용하는 도구(매핑, 필터링, 폴딩 등)에 대한 이해를 확고히 할 수 있습니다.
- *
- * 이 모듈에서는 다양한 일반적인 과제를 해결하면서 스칼라 컬렉션 라이브러리의 강력함을 더 익숙하게 다루게 될 것입니다.
- * 이를 통해 데이터 처리 및 변환에 있어 함수형 프로그래밍의 도구들을 실전에서 활용하는 방법을 익힐 수 있습니다.
+ * **컬렉션으로 데이터 처리하기**
+ * 
+ * 이제 여러분은 함수형 프로그래밍의 핵심 도구들을 모두 배웠습니다:
+ * - 함수와 람다 (00-lambdas)
+ * - 데이터 모델링 (01-data)  
+ * - Option으로 null 안전성 (02-nulls)
+ * - Try와 Either로 예외 처리 (03-exceptions)
+ * 
+ * 이제 이 모든 지식을 활용하여 컬렉션을 다뤄봅시다!
+ * 
+ * 실제 프로그래밍에서는 데이터 목록을 처리하는 일이 매우 많습니다:
+ * - 사용자 목록에서 특정 조건에 맞는 사용자 찾기
+ * - 주문 목록에서 총 금액 계산하기  
+ * - 로그 파일에서 에러 메시지만 추출하기
+ * 
+ * 전통적인 for 루프 대신, Scala는 강력한 컬렉션 메서드들을 제공합니다:
+ * - `map`: 각 요소를 변환
+ * - `filter`: 조건에 맞는 요소만 선택
+ * - `find`: 조건에 맞는 첫 번째 요소 찾기 (Option 반환! - 이제 이해할 수 있습니다)
+ * - `headOption`: 안전한 첫 번째 요소 접근 (Option 반환)
+ * - `fold`: 모든 요소를 하나의 값으로 축약
+ * 
+ * Option을 이미 배웠기 때문에, 컬렉션 메서드들이 왜 Option을 반환하는지, 
+ * 그리고 이를 어떻게 안전하게 사용하는지 자연스럽게 이해할 수 있을 것입니다.
  */
 package net.degoes
 
@@ -19,46 +35,42 @@ object Collections extends ZIOSpecDefault {
       suite("operations") {
 
         /**
-         * 연습문제
+         * EXERCISE 1
          *
-         * `List#foreach`를 사용하여, 주어진 리스트의 모든 값을 변수 `sum`에 더하세요.
+         * Use `List#foreach` to add all values in the given list to the variable `sum`.
          */
         test("foreach") {
           var sum = 0
 
           val list = List(0, 3, 0, 2, 1)
 
-          list.foreach { _ =>
-            sum += 0
-          }
+          ???
 
           assertTrue(sum == 6)
         } @@ ignore +
           /**
-           * 연습문제
+           * EXERCISE 2
            *
-           * `List#map`을 사용하여, 주어진 리스트의 각 요소를 2배로 곱한 새로운 리스트로 변환하세요.
+           * Use `List#map` to transform each element by doubling it.
            */
           test("map") {
             val list1 = List(0, 3, 0, 2, 1)
 
-            val list2 = list1.map(i => i) // EDIT HERE
+            val list2 = list1.map(???)
 
             assertTrue(list2.sum == 12 && list2.length == list1.length)
           } @@ ignore +
           /**
-           * 연습문제
+           * EXERCISE 3
            *
-           * `List#filter`를 사용하여, 주어진 리스트에서 짝수만 남도록 필터링하세요.
+           * Use `List#filter` to keep only even numbers from the list.
            */
           test("filter") {
             val isEven = (i: Int) => i % 2 == 0
 
-            val _ = isEven
-
             val list1 = List(0, 3, 0, 2, 1)
 
-            val list2 = list1.filter(_ => true) // EDIT HERE
+            val list2 = list1.filter(???)
 
             assertTrue(list2 == List(0, 0, 2))
           } @@ ignore +
