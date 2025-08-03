@@ -13,13 +13,13 @@ package net.degoes
 import zio.test._
 import zio.test.TestAspect._
 
-object Nulls extends ZIOSpecDefault {
+object NullsAnswer extends ZIOSpecDefault {
   def spec =
     suite("Nulls") {
       suite("basics") {
 
         /**
-         * EXERCISE
+         * EXERCISE-01
          *
          * `parentOf` 함수는 일부 경로에 대해 `null`을 반환합니다. 함수를
          * `File | Null` 대신 `Option[File]`을 반환하도록 수정하세요.
@@ -27,47 +27,44 @@ object Nulls extends ZIOSpecDefault {
         test("apply") {
           import java.io.File
 
-          def parentOf(file: String) = new File(file).getParent
+          def parentOf(file: String): Option[File] = Option(new File(file).getParentFile)
 
           assertTrue(parentOf("") != null)
         } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-02
            *
            * `Option`의 `Some`과 `None` 생성자를 직접 사용하여,
            * null일 수 있는 `A` 값으로부터 `Option[A]`를 생성하세요.
            */
           test("Some / None") {
-            def fromNullable[A](a: A): Option[A] =
-              ???
-
+            def fromNullable[A](a: A): Option[A] = a match {
+              case null => None
+              case value => Some(value)
+            }
+              
             val nullInt = null.asInstanceOf[Int]
 
             assertTrue(fromNullable(nullInt) == None && fromNullable(42) == Some(42))
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-03
            *
            * `Option#getOrElse`를 사용하여, `loadConfig` 메서드가 `None`을
            * 반환할 경우 `DefaultConfig`를 기본값으로 사용하세요.
            */
           test("getOrElse") {
             final case class Config(host: String, port: Int)
-            val DefaultConfig = Config("localhost", 7777)
-
-            val _ = DefaultConfig
+            val defaultConfig = Config("localhost", 7777)
 
             def loadConfig(): Option[Config] = None
 
-            def config: Config = {
-              loadConfig()
-              ???
-            }
+            def config: Config = loadConfig().getOrElse(defaultConfig)
 
             assertTrue(config != null)
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-04
            *
            * `Option#map`을 사용하여, int를 char로 변환함으로써
            * `Option[Int]`를 `Option[Char]`로 변환하세요.
@@ -75,36 +72,38 @@ object Nulls extends ZIOSpecDefault {
           test("map") {
             val option: Option[Int] = Some(42)
 
-            def convert(o: Option[Int]): Option[Char] = ???
+            def convert(o: Option[Int]): Option[Char] = o.map(_.toChar)
 
             assertTrue(convert(option) == Some(42.toChar))
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-05
            *
            * 두 개의 옵션을 결합하여 두 결과의 튜플을 담은 단일 옵션으로
            * 만들 수 있는 `both` 함수를 구현하세요.
+           * 
+           * 만약 Option[Option[A]] 형태가 결과로 나올 경우, 어떤 메서드를 이용하여 Option[A]로 변환할 수 있는지 찾아 보세요.
            */
           test("both") {
             def both[A, B](left: Option[A], right: Option[B]): Option[(A, B)] =
-              ???
+              left.flatMap(l => right.map(r => (l, r)))
 
             assertTrue(both(Some(42), Some(24)) == Some((42, 24)))
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-06
            *
            * 첫 번째로 이용 가능한 값을 사용하여 두 개의 옵션을 단일 옵션으로
            * 결합할 수 있는 `firstOf` 함수를 구현하세요.
            */
           test("oneOf") {
             def firstOf[A](left: Option[A], right: Option[A]): Option[A] =
-              ???
+              left.orElse(right)
 
             assertTrue(firstOf(None, Some(24)) == Some(24))
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-07
            *
            * 옵션의 값을 지정된 콜백에 전달하여 다른 옵션을 생성하고
            * 반환하는 `chain` 함수를 구현하세요. 옵션에 값이 없으면
@@ -113,12 +112,12 @@ object Nulls extends ZIOSpecDefault {
            */
           test("chain") {
             def chain[A, B](first: Option[A], andThen: A => Option[B]): Option[B] =
-              ???
+              first.flatMap(andThen)
 
             assertTrue(chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42))
           } @@ ignore +
           /**
-           * EXERCISE
+           * EXERCISE-08
            *
            * `Option#flatMap`을 사용하여 다음의 패턴 매칭이 많은
            * 코드를 단순화하세요.
@@ -130,14 +129,7 @@ object Nulls extends ZIOSpecDefault {
             final case class User(name: String, profile: Option[Profile])
 
             def getLatLong(user: User): Option[LatLong] =
-              user.profile match {
-                case None => None
-                case Some(v) =>
-                  v.location match {
-                    case None    => None
-                    case Some(v) => v.latLong
-                  }
-              }
+              user.profile.flatMap(_.location.flatMap(_.latLong))
 
             val latLong = LatLong(123, 123)
 
@@ -149,46 +141,42 @@ object Nulls extends ZIOSpecDefault {
         suite("porting") {
 
           /**
-           * EXERCISE
+           * EXERCISE-09
            *
            * System.property 메서드의 null-safe 버전을 만드세요.
            */
           test("property") {
             object SafeProperty {
-              def getProperty(name: String): Option[String] = ???
+              def getProperty(name: String): Option[String] = Option(System.getProperty(name))
 
-              def getIntProperty(name: String): Option[Int] = ???
+              def getIntProperty(name: String): Option[Int] = getProperty(name).map(_.toInt)
 
-              def getBoolProperty(name: String): Option[Boolean] = ???
+              def getBoolProperty(name: String): Option[Boolean] = getProperty(name).map(_.toBoolean)
             }
 
             assertTrue(SafeProperty.getProperty("foo.bar") == None)
           } @@ ignore +
             /**
-             * EXERCISE
+             * EXERCISE-10
              *
              * 다음 코드를 null 대신 `Option`을 사용하도록 다시 작성하세요.
              */
             test("example 1") {
-              final case class Address(street: String)
-              final case class Profile(address: Address)
-              final case class User(id: String, profile: Profile)
+              final case class Address(street: Option[String])
+              final case class Profile(address: Option[Address])
+              final case class User(id: String, profile: Option[Profile])
 
               val user1 =
-                User("Sherlock Holmes", null)
+                User("Sherlock Holmes", None)
               val user2 =
-                User("Sherlock Holmes", Profile(null))
+                User("Sherlock Holmes", Some(Profile(None)))
               val user3 =
-                User("Sherlock Holmes", Profile(Address(null)))
+                User("Sherlock Holmes", Some(Profile(Some(Address(None)))))
 
-              def getStreet(user: User): String =
-                if (user == null) null
-                else if (user.profile == null) null
-                else if (user.profile.address == null) null
-                else if (user.profile.address.street == null) null
-                else user.profile.address.street
+              def getStreet(user: User): Option[String] =
+                user.profile.flatMap(_.address.flatMap(_.street))
 
-              def assertFails(value: => Any) = assertTrue(value == null)
+              def assertFails(value: => Option[Any]) = assertTrue(value == None)
 
               assertFails(getStreet(user1)) &&
               assertFails(getStreet(user2)) &&

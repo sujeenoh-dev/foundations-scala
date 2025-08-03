@@ -13,26 +13,26 @@ import zio.test._
 import zio.test.TestAspect._
 import java.io.IOException
 
-object Effects extends ZIOSpecDefault {
+object EffectsAnswer extends ZIOSpecDefault {
   def spec =
     suite("Effects") {
       suite("constructors") {
 
         /**
-         * 연습문제
+         * 연습문제-01
          *
          * `ZIO.succeed`를 사용하여 값 `42`로 성공하는 이팩트를
          * 구성하세요.
          */
         test("succeed") {
-          def effect: ZIO[Any, Nothing, Int] = ???
+          def effect: ZIO[Any, Nothing, Int] = ZIO.succeed(42)
 
           for {
             result <- effect
           } yield assertTrue(result == 42)
         } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-02
            *
            * `ZIO.fromEither`를 사용하여 제공된 either 값으로부터
            * 이팩트를 구성하세요.
@@ -40,16 +40,14 @@ object Effects extends ZIOSpecDefault {
           test("fromEither (success)") {
             val either: Either[String, Int] = Right(42)
 
-            val _ = either
-
-            def effect: ZIO[Any, String, Int] = ???
+            def effect: ZIO[Any, String, Int] = ZIO.fromEither(either)
 
             for {
               result <- effect
             } yield assertTrue(result == 42)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-03
            *
            * `ZIO.fromOption`을 사용하여 제공된 option 값으로부터
            * 이팩트를 구성하세요.
@@ -57,9 +55,7 @@ object Effects extends ZIOSpecDefault {
           test("fromOption (success)") {
             val option: Option[Int] = Some(42)
 
-            val _ = option
-
-            def effect: ZIO[Any, Option[Nothing], Int] = ???
+            def effect: ZIO[Any, Option[Nothing], Int] = ZIO.fromOption(option)
 
             for {
               result <- effect
@@ -69,13 +65,13 @@ object Effects extends ZIOSpecDefault {
         suite("operators") {
 
           /**
-           * 연습문제
+           * 연습문제-04
            *
            * `ZIO#map`을 사용하여 `Console.readLine` 이팩트의 성공 값을
            * 콘솔에서 읽은 텍스트 라인의 길이를 나타내는 정수로 맵핑하세요.
            */
           test("map") {
-            val readInt: IO[IOException, Int] = ???
+            val readInt: IO[IOException, Int] = Console.readLine.map(_.length)
 
             for {
               _   <- TestConsole.feedLines("Sherlock")
@@ -83,7 +79,7 @@ object Effects extends ZIOSpecDefault {
             } yield assertTrue(int == 8)
           } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-05
              *
              * `ZIO#mapError`를 사용하여 제공된 이팩트의 정수 실패를
              * 정수의 문자열 표현으로 변환하세요.
@@ -93,14 +89,14 @@ object Effects extends ZIOSpecDefault {
 
               val failure = ZIO.fail(errorCode)
 
-              val mappedFailure: IO[String, Nothing] = failure.mapError(???)
+              val mappedFailure: IO[String, Nothing] = failure.mapError(_.toString)
 
               for {
                 value <- mappedFailure.flip
               } yield assertTrue(value == "42")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-06
              *
              * `ZIO#zip`을 사용하여 제공된 두 이팩트를 순차적으로 결합하세요.
              */
@@ -108,10 +104,7 @@ object Effects extends ZIOSpecDefault {
               val first = Console.printLine("Sherlock")
               val last  = Console.printLine("Holmes")
 
-              val _ = first
-              val _ = last
-
-              val zipped: ZIO[Any, IOException, Unit] = ???
+              val zipped = first.zip(last)
 
               for {
                 _      <- zipped
@@ -119,7 +112,7 @@ object Effects extends ZIOSpecDefault {
               } yield assertTrue(output == Vector("Sherlock\n", "Holmes\n"))
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-07
              *
              * `ZIO.*>`를 사용하여 제공된 두 이팩트를 순차적으로 연결하되,
              * 우측의 성공 값을 반환하세요.
@@ -128,17 +121,14 @@ object Effects extends ZIOSpecDefault {
               val first  = ZIO.succeed(42)
               val second = ZIO.succeed("Roger Rabbit")
 
-              val _ = first
-              val _ = second
-
-              val zipLeft: UIO[String] = ???
+              val zipLeft: UIO[String] = first *> second
 
               for {
                 result <- zipLeft
               } yield assertTrue(result == "Roger Rabbit")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-08
              *
              * `ZIO.<*`를 사용하여 제공된 두 이팩트를 순차적으로 연결하되,
              * 좌측의 성공 값을 반환하세요.
@@ -147,26 +137,26 @@ object Effects extends ZIOSpecDefault {
               val first  = ZIO.succeed(42)
               val second = ZIO.succeed("Roger Rabbit")
 
-              val _ = first
-              val _ = second
-
-              val zipLeft: UIO[Int] = ???
+              val zipLeft: UIO[Int] = first <* second
 
               for {
                 result <- zipLeft
               } yield assertTrue(result == 42)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-09
              *
              * `ZIO#flatMap`, `Console.printLine`, `Console.readLine`을 사용하여
-             * "이름이 무엇인가요?"를 출력하고, 사용자의 이름을 읽은 다음,
+             * "What is your name?"을 출력하고, 사용자의 이름을 읽은 다음,
              * 마지막으로 "Hello, <이름>!"을 출력하는 프로그램을 작성하세요.
              * 여기서 <이름>은 사용자의 이름입니다.
              */
             test("flatMap") {
 
-              def program: ZIO[Any, IOException, Unit] = ???
+              def program: ZIO[Any, IOException, Unit] = 
+                Console.printLine("What is your name?").flatMap(_ => 
+                  Console.readLine.flatMap(name => 
+                    Console.printLine(s"Hello, $name!")))
 
               val expected =
                 Vector("What is your name?\n", "Sherlock\n", "Hello, Sherlock!\n")
@@ -178,41 +168,42 @@ object Effects extends ZIOSpecDefault {
               } yield assertTrue(output == expected)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-10
              *
              * `ZIO.catchAll`과 `ZIO.succeed`를 사용하여 실패한 이팩트로부터
              * 복구하여 문자열 "Recovered!"로 성공하도록 하세요.
              */
             test("catchAll") {
               def effect: ZIO[Any, Nothing, String] =
-                ZIO.fail("Uh oh!").FIXME
+                ZIO.fail("Uh oh!").catchAll(_ => ZIO.succeed("Recovered!"))
 
               for {
                 value <- effect
               } yield assertTrue(value == "Recovered!")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-11
              *
              * `ZIO#foldZIO`를 사용하여 제공된 이팩트의 오류와 성공 경우 모두를
              * 처리하여 상수 문자열 "Did it!"을 생성하세요.
              */
             test("foldZIO") {
               def effect: ZIO[Any, Nothing, String] =
-                ZIO.fail("Failure").FIXME
+                ZIO.fail("Failure").foldZIO(_ => ZIO.succeed("Did it!"), _ => ZIO.succeed("Did it!"))
 
               for {
                 value <- effect
               } yield assertTrue(value == "Did it!")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-12
              *
              * 재귀를 사용하여 조건(predicate)이 true를 반환하는 동안만
              * (그보다 더 오래 말고) 상태 값에 대해 반복하는 `iterate` 함수를 구현하세요.
              */
             test("recursion") {
-              def iterate[R, E, S](start: S)(pred: S => Boolean)(f: S => ZIO[R, E, S]): ZIO[R, E, S] = ???
+              def iterate[R, E, S](start: S)(pred: S => Boolean)(f: S => ZIO[R, E, S]): ZIO[R, E, S] = 
+                if (pred(start)) f(start).flatMap(s => iterate(s)(pred)(f)) else ZIO.succeed(start)
 
               val iterationResult =
                 iterate(List.empty[String])(_.length < 3) { list =>
@@ -224,7 +215,7 @@ object Effects extends ZIOSpecDefault {
               } yield assertTrue(list == List("a", "a", "a"))
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-13
              *
              * ZIO를 사용하여 다양한 이팩트 타입들을 결합할 수 있도록 하세요.
              */
@@ -243,18 +234,15 @@ object Effects extends ZIOSpecDefault {
               def getPrefs(): Option[Prefs]       = Some(Map("autosave" -> true))
 
               def getUserZIO: IO[UnknownUserError, User] = {
-                getUser()
-                ???
+                ZIO.fromEither(getUser()).mapError(UnknownUserError(_))
               }
 
               def getDocsZIO: IO[Throwable, Docs] = {
-                getDocs()
-                ???
+                ZIO.fromTry(getDocs())
               }
 
               def getPrefsZIO: IO[NoPreferencesError, Prefs] = {
-                getPrefs()
-                ???
+                ZIO.fromOption(getPrefs()).mapError(_ => NoPreferencesError())
               }
 
               for {
@@ -270,10 +258,12 @@ object Effects extends ZIOSpecDefault {
         suite("control flow") {
 
           /**
-           * 연습문제
+           * 연습문제-14
            *
            * `ZIO#forever`를 사용하여 워커가 영원히 실행되도록 하여
            * 중단될 때까지 결과를 계속 누적하도록 하세요.
+           * 
+           * 언제 워커가 실행될지 생각해 보세요.
            */
           test("forever") {
 
@@ -282,14 +272,14 @@ object Effects extends ZIOSpecDefault {
 
             for {
               accum  <- Ref.make[List[String]](Nil)
-              worker = makeWorker(accum)
+              worker = makeWorker(accum).forever
               fiber  <- worker.fork
               _      <- accum.get.repeatUntil(_.length > 10) *> fiber.interrupt
               result <- accum.get
             } yield assertTrue(result.length > 10)
           } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-15
              *
              * `ZIO#eventually`를 사용하여 워커가 성공할 때까지
              * 반복하도록 하세요.
@@ -304,11 +294,11 @@ object Effects extends ZIOSpecDefault {
               for {
                 ref    <- Ref.make(0)
                 worker = makeWorker(ref)
-                result <- worker
+                result <- worker.eventually
               } yield assertTrue(result == "Success!")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-16
              *
              * `ZIO#repeatN`을 사용하여 제공된 이팩트를 5번 반복하세요.
              */
@@ -317,12 +307,12 @@ object Effects extends ZIOSpecDefault {
               for {
                 ref    <- Ref.make(0)
                 effect = ref.update(_ + 1)
-                _      <- effect
+                _      <- effect.repeatN(5)
                 result <- ref.get
               } yield assertTrue(result == 6)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-17
              *
              * `ZIO.whenZIO`를 사용하여 `continue` 이팩트가 `true`로 성공할 때마다
              * 제공된 ref를 `true`로 설정하세요.
@@ -343,7 +333,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 ref    <- Ref.make(false)
                 _      <- TestConsole.feedLines("y")
-                _      <- continue
+                _      <- ZIO.whenZIO(continue)(ref.set(true))
                 result <- ref.get
               } yield assertTrue(result)
             } @@ ignore

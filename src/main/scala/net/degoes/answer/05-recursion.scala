@@ -19,33 +19,44 @@ object RecursionAnswer extends ZIOSpecDefault {
       suite("basics") {
 
         /**
-         * 연습문제
+         * 연습문제-01
          *
          * 재귀를 사용하여 정수 리스트의 합을 계산하세요.
          */
         test("sum") {
-          def sum(list: List[Int]): Int = ???
+          def sum(list: List[Int]): Int = list match {
+            case Nil => 0
+            case head :: tail => head + sum(tail)
+          }
 
           assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
         } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-02
            *
            * 재귀를 사용하여 정수 리스트의 최대값을 계산하세요.
+           * 리스트가 비어 있다면 아무 값이나 리턴하세요.
+           * 리스트 안의 값은 모두 양수입니다.
            */
           test("max") {
-            def max(list: List[Int]): Int = ???
+            def max(list: List[Int]): Int = list match {
+              case Nil => 0
+              case head :: tail => head max max(tail)
+            }
 
             assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-03
            *
            * 재귀를 사용하여 수가 소수인지 판별하세요.
            */
           test("prime") {
             def isPrime(n: Int): Boolean = {
-              def loop(n: Int, divisor: Int): Boolean = ???
+              def loop(n: Int, divisor: Int): Boolean = 
+                if (divisor * divisor > n) true
+                else if (n % divisor == 0) false
+                else loop(n, divisor + 1)
 
               loop(n, 2)
             }
@@ -53,43 +64,51 @@ object RecursionAnswer extends ZIOSpecDefault {
             assertTrue(!isPrime(4) && isPrime(7) && isPrime(11))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-04
            *
            * 재귀를 사용하여 n번째 피보나치 수를 계산하세요. 피보나치
            * 수열은 0, 1, 1, <이전 두 수의 합>... 으로 정의됩니다.
            */
           test("fibs") {
-            def fib(n: Int): Int = ???
+            def fib(n: Int): Int = 
+              if (n > 1) fib(n - 1) + fib(n - 2)
+              else n
 
             assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-05
            *
            * 재귀를 사용하여 제공된 리스트를 정렬하세요. 헤드를 선택하고,
            * 헤드보다 작은 것들과 작지 않은 것들을 (각각) 정렬한 다음,
            * 올바른 순서로 연결하는 방식으로 정렬하세요.
            */
           test("pivot sort") {
-            def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = ???
+            def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = list match {
+              case Nil => list
+              case head :: tail => 
+                val (less, more) = tail.partition(ordering.lt(_, head))
+                sort(less) ++ (head :: sort(more))
+            }
 
             assertTrue(sort(List(9, 23, 1, 5)) == List(1, 5, 9, 23))
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-06
            *
            * 재귀를 사용하여 조건(predicate)이 만족될 때까지 반복하는
            * 메서드를 구현하세요.
            */
           test("loop") {
-            def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = ???
+            def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = 
+              if (pred(start)) start else loop(iterate(start))(pred)(iterate)
 
             val inc = loop(0)(_ < 10)(_ + 1)
 
             assertTrue(inc == 10)
           } @@ ignore +
           /**
-           * 연습문제
+           * 연습문제-07
            *
            * 재귀를 사용하여 조건(predicate)이 참이 될 때까지 지정된
            * 액션을 계속 반복하는 메서드를 구현하세요.
@@ -105,7 +124,10 @@ object RecursionAnswer extends ZIOSpecDefault {
                   head
               }
 
-            def repeatWhile[A, S](action: () => A)(pred: A => Boolean)(reducer: (A, A) => A): A = ???
+            def repeatWhile[A, S](action: () => A)(pred: A => Boolean)(reducer: (A, A) => A): A = {
+              val current = action()
+              if (pred(current)) reducer(current, repeatWhile(action)(pred)(reducer)) else current
+            }
 
             val result = repeatWhile(readLine)(_ == "Sherlock")((a, b) => b)
 
@@ -114,45 +136,61 @@ object RecursionAnswer extends ZIOSpecDefault {
 
       } +
         suite("tail recursion") {
-          // import scala.annotation.tailrec
+          /* TODO : 꼬리재귀 설명 추가
+           */
+          
+          import scala.annotation.tailrec
           /**
-           * 연습문제
+           * 연습문제-08
            *
            * 이전 `sum`의 꼬리 재귀 버전을 작성하세요.
+           * 파라미터를 조정해도 좋습니다.
            */
           test("sum") {
-            // @tailrec
-            def sum(list: List[Int]): Int = ???
+            @tailrec
+            def sum(list: List[Int], acc: Int = 0): Int = list match {
+              case Nil => acc
+              case head :: tail => sum(tail, acc + head)
+            }
 
             assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
           } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-09
              *
              * 이전 `max`의 꼬리 재귀 버전을 작성하세요.
+             * 파라미터를 조정해도 좋습니다.
+             * 모든 원소는 양수입니다.
              */
             test("max") {
-              // @tailrec
-              def max(list: List[Int]): Int = ???
+              @tailrec
+              def max(list: List[Int], acc: Int = 0): Int = list match {
+                case Nil => acc
+                case head :: tail => max(tail, acc max head)
+              }
 
               assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-10
              *
              * 이전 `loop`의 꼬리 재귀 버전을 작성하세요.
+             * 파라미터를 조정해도 좋습니다.
              */
             test("loop") {
-              def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = ???
+              @tailrec
+              def loop[S](start: S)(pred: S => Boolean)(iterate: S => S): S = 
+                if (pred(start)) start else loop(iterate(start))(pred)(iterate)
 
               val inc = loop(0)(_ < 10)(_ + 1)
 
               assertTrue(inc == 10)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-11
              *
              * 이전 `repeat`의 꼬리 재귀 버전을 작성하세요.
+             * 새로운 메서드를 만들거나 파라미터를 변경해도 좋습니다.
              */
             test("repeat") {
               var input = "John" :: "Scotty" :: "Bob" :: "Sherlock" :: Nil
@@ -165,33 +203,60 @@ object RecursionAnswer extends ZIOSpecDefault {
                     head
                 }
 
-              def repeatWhile[A, S](action: () => A)(pred: A => Boolean)(reducer: (A, A) => A): A = ???
+              
+              def repeatWhile[A, S](action: () => A)(pred: A => Boolean)(reducer: (A, A) => A): A = {
+                @tailrec
+                def loop(current: A): A = {
+                  val next = action()
+                  if(pred(next)) next
+                  else loop(reducer(current, next))
+                }
+
+                val first: A = action()
+                if (pred(first)) first
+                else loop(first)
+              }
+
 
               val result = repeatWhile(readLine)(_ == "Sherlock")((a, b) => b)
 
               assertTrue(result == "Sherlock")
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-12
              *
              * 꼬리 재귀를 사용하여 피보나치 수열을 작성하는 방법을 찾아보세요.
              *
              * 주의: 고급 문제입니다.
              */
             test("fibs") {
-              def fib(n: Int): Int = ???
+              @tailrec
+              def fib(n: Int, acc: Int = 1, left: Int = 0, right: Int = 1): Int = 
+                if (acc <= n) fib(n, acc + 1, right, left + right)
+                else right
 
               assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
             } @@ ignore +
             /**
-             * 연습문제
+             * 연습문제-13
              *
              * 꼬리 재귀를 사용하여 피벗 정렬을 작성하는 방법을 찾아보세요.
              *
              * 주의: 고급 문제입니다.
              */
-            test("pivot sort") {
-              def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = ???
+            test("pivot sort with tail recursion") {
+              def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = {
+                @tailrec
+                def loop(stack: List[List[A]], acc: List[A]): List[A] = stack match {
+                  case Nil => acc.reverse
+                  case Nil :: rest => loop(rest, acc)
+                  case (pivot :: tail) :: rest =>
+                    val (left, right) = tail.partition(ordering.lt(_, pivot))
+                    loop(left :: Nil :: right :: rest, pivot :: acc)
+                }
+
+                loop(List(list), Nil).asInstanceOf[List[A]]
+              }
 
               assertTrue(sort(List(9, 23, 1, 5)) == List(1, 5, 9, 23))
             } @@ ignore

@@ -90,7 +90,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("drop") {
             val list1 = List(1, 2, 3, 4)
 
-            val list2 = list1
+            val list2 = list1.drop(2)
 
             assertTrue(list2 == List(3, 4))
           } @@ ignore +
@@ -102,7 +102,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("dropWhile") {
             val list1 = List(1, 2, 0, 3, 1, 2)
 
-            val list2 = list1
+            val list2 = list1.dropWhile(_ < 3)
 
             assertTrue(list2 == List(3, 1, 2))
           } @@ ignore +
@@ -116,11 +116,9 @@ object CollectionsAnswer extends ZIOSpecDefault {
 
             val isEven = (i: Int) => i % 2 == 0
 
-            val _ = isEven
-
             val list1 = List(0, 3, 0, 2, 1)
 
-            def list2: List[Even] = list1.collect(???)
+            def list2: List[Even] = list1.collect { case x if isEven(x) => Even(x) }
 
             assertTrue(list2 == List(Even(0), Even(0), Even(2)))
           } @@ ignore +
@@ -132,11 +130,9 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("partition") {
             val isEven = (i: Int) => i % 2 == 0
 
-            val _ = isEven
-
             val list = List(0, 3, 0, 2, 1)
 
-            val (even, odd) = list.partition(_ => ???)
+            val (even, odd) = list.partition(isEven)
 
             assertTrue(even == List(0, 0, 2) && odd == List(3, 1))
           } @@ ignore +
@@ -150,11 +146,8 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list1: List[Int] = List()
             val list2: List[Int] = List(1, 2, 3)
 
-            val _ = list1
-            val _ = list2
-
-            def summedList1: Option[Int] = ???
-            def summedList2: Option[Int] = ???
+            def summedList1: Option[Int] = list1.reduceOption(_ + _)
+            def summedList2: Option[Int] = list2.reduceOption(_ + _)
 
             assertTrue(summedList1 == None && summedList2 == Some(6))
           } @@ ignore +
@@ -166,9 +159,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("find") {
             val list = List(1, 2, 3, 4)
 
-            val _ = list
-
-            def firstGreaterThan2: Option[Int] = ???
+            def firstGreaterThan2: Option[Int] = list.find(_ > 2)
 
             assertTrue(firstGreaterThan2 == Some(3))
           } @@ ignore +
@@ -180,9 +171,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("exists") {
             val list = List(1, 2, 3, 4, -1)
 
-            val _ = list
-
-            def existsNegative: Boolean = ???
+            def existsNegative: Boolean = list.exists(_ < 0)
 
             assertTrue(existsNegative)
           } @@ ignore +
@@ -194,13 +183,9 @@ object CollectionsAnswer extends ZIOSpecDefault {
           test("forall") {
             val isEven = (i: Int) => i % 2 == 0
 
-            val _ = isEven
-
             val list = List(0, 2, 6, 8, 12, 10)
 
-            val _ = list
-
-            def forallEven: Boolean = ???
+            def forallEven: Boolean = list.forall(isEven)
 
             assertTrue(forallEven)
           } @@ ignore +
@@ -212,7 +197,9 @@ object CollectionsAnswer extends ZIOSpecDefault {
              * `List#foldLeft`를 사용하여, 주어진 리스트의 합을 구하세요.
              */
             test("sum") {
-              def sum(list: List[Int]): Int = ???
+              def sum(list: List[Int]): Int = list.foldLeft(0) { (acc, ele) =>
+                acc + ele
+              }
 
               assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
             } @@ ignore +
@@ -220,9 +207,12 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * 연습문제
                *
                * `List#foldLeft`를 사용하여, 주어진 리스트의 최대 요소를 구하세요.
+               * 리스트의 원소는 모두 양수입니다
                */
               test("max") {
-                def max(list: List[Int]): Int = ???
+                def max(list: List[Int]): Int = list.foldLeft(0) { (acc, ele) =>
+                  acc max ele
+                }
 
                 assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
               } @@ ignore +
@@ -230,9 +220,12 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * 연습문제
                *
                * `List#foldLeft`를 사용하여, 주어진 리스트의 최소 요소를 구하세요.
+               * 리스트 안 원소의 최댓값은 100입니다.
                */
               test("min") {
-                def min(list: List[Int]): Int = ???
+                def min(list: List[Int]): Int = list.foldLeft(100) { (acc, ele) =>
+                  acc min ele
+                }
 
                 assertTrue(min(List(1, 7, 3, 2, 0, 4, 5)) == 0)
               } @@ ignore +
@@ -242,7 +235,9 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * `List#foldLeft`를 사용하여, 주어진 리스트를 뒤집으세요.
                */
               test("reverse") {
-                def reverse[A](list: List[A]): List[A] = ???
+                def reverse[A](list: List[A]): List[A] = list.foldLeft (List.empty[A]) { (acc, ele) =>
+                  ele :: acc
+                }
 
                 assertTrue(reverse(List(1, 7, 3)) == List(3, 7, 1))
               } @@ ignore +
@@ -252,9 +247,11 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * `List#foldLeft`를 사용하여, 주어진 리스트를 조건에 맞는 요소와 그렇지 않은 요소로 분리하는 함수를 구현하세요.
                */
               test("partition") {
-                def partition[A](list: List[A])(pred: A => Boolean): (List[A], List[A]) = ???
+                def partition[A](list: List[A])(pred: A => Boolean): (List[A], List[A]) = list.foldLeft((List.empty[A], List.empty[A])) { 
+                  case ((isTrue, isFalse), ele) => if (pred(ele)) (ele :: isTrue, isFalse) else (isTrue, ele :: isFalse)
+                }
 
-                assertTrue(partition(List(1, 7, 3))(_ < 5) == ((List(1, 3), List(7))))
+                assertTrue(partition(List(1, 7, 3))(_ < 5) == (List(3, 1), List(7)))
               } @@ ignore +
               /**
                * 연습문제
@@ -262,7 +259,12 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * `List#foldLeft`를 사용하여, 주어진 리스트에서 `n`개의 요소를 취하는 함수를 구현하세요.
                */
               test("take") {
-                def take[A](n: Int, list: List[A]): List[A] = ???
+                def take[A](n: Int, list: List[A]): List[A] = {
+                  val (taken, _) = list.foldLeft((List.empty[A], 0)) { case ((acc, count), ele) =>
+                    if (count < n) (ele :: acc, count + 1) else (acc, count)
+                  }
+                  taken.reverse
+                }
 
                 assertTrue(take(2, List(1, 7, 3)) == List(1, 7))
               } @@ ignore +
@@ -272,9 +274,13 @@ object CollectionsAnswer extends ZIOSpecDefault {
                * `List#foldLeft`를 사용하여, 주어진 리스트에서 조건에 맞는 요소를 취하는 함수를 구현하세요.
                */
               test("takeWhile") {
-                def takeWhile[A](list: List[A])(pred: A => Boolean): List[A] = ???
+                def takeWhile[A](list: List[A])(pred: A => Boolean): List[A] = list.foldLeft((List.empty[A], false)) { 
+                  case ((acc, stopped), ele) =>
+                    if (pred(ele) && !stopped) (ele :: acc, false)
+                    else (acc, true)
+                }._1
 
-                assertTrue(takeWhile(List(1, 7, 3))(_ < 5) == List(1))
+                assertTrue(takeWhile(List(1, 7, 3))(_ < 5).reverse == List(1))
               } @@ ignore
           }
       } +
@@ -286,13 +292,13 @@ object CollectionsAnswer extends ZIOSpecDefault {
            * 코드의 성능 문제를 해결하기 위해, 사용된 컬렉션 타입만 변경하세요.
            */
           test("head/tail") {
-            def sum(values: Seq[Int]): Int =
-              values.headOption match {
-                case None        => 0
-                case Some(value) => value + sum(values.drop(1))
+            def sum(values: List[Int]): Int =
+              values match {
+                case Nil        => 0
+                case head :: tail => head + sum(tail.drop(1))
               }
 
-            assertTrue(sum(0 to 10000) > 0)
+            assertTrue(sum((0 to 10000).toList) > 0)
           } @@ ignore +
             /**
              * 연습문제
@@ -300,7 +306,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
              * 이 코드의 성능 문제를, 컬렉션 타입만 변경하여 해결해 보세요.
              */
             test("random access") {
-              def sumProduct(left: Seq[Int], right: Seq[Int]): Int = {
+              def sumProduct(left: Vector[Int], right: Vector[Int]): Int = {
                 val length = left.length.max(right.length)
 
                 (0 to length).foldLeft(0) {
@@ -308,7 +314,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
               }
 
-              assertTrue(sumProduct(List.fill(1000)(2), List.fill(1000)(2)) > 0)
+              assertTrue(sumProduct(Vector.fill(1000)(2), Vector.fill(1000)(2)) > 0)
             } @@ ignore +
             /**
              * 연습문제
@@ -316,11 +322,11 @@ object CollectionsAnswer extends ZIOSpecDefault {
              * 이 코드의 성능 문제를, 컬렉션 타입만 변경하여 해결해 보세요.
              */
             test("containment") {
-              def equivalent(left: Seq[Int], right: Seq[Int]): Boolean =
+              def equivalent(left: Set[Int], right: Set[Int]): Boolean =
                 left.forall(i => right.contains(i)) &&
                   right.forall(i => left.contains(i))
 
-              assertTrue(equivalent(List.fill(1000)(2), List.fill(1000)(2)))
+              assertTrue(equivalent(Set.fill(1000)(2), Set.fill(1000)(2)))
             } @@ ignore
         }
     }
@@ -333,7 +339,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
  *
  * 이 과제에서는 스칼라 컬렉션을 사용하여 그래프 데이터 구조를 구현하는 경험을 얻게 됩니다.
  */
-object CollectionsGraduation {
+object CollectionsGraduationAnswer {
 
   /**
    * 연습문제

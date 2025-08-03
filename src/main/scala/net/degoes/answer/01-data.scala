@@ -52,13 +52,13 @@ object DataAnswer extends ZIOSpecDefault {
             case class Recipe(name: String, quantity: Int)
 
             object Recipe {
-              def apply(name: String, quantity: Int) = Recipe(
+              def apply(name: String, quantity: Int): Recipe = Recipe(
                 name = name,
                 quantity = quantity
               )
             }
 
-            assertTrue(Recipe("Sweet Potato", 42) == Person("Sweet Potato", 42))
+            assertTrue(Recipe("Sweet Potato", 42) == Recipe("Sweet Potato", 42))
           } @@ ignore +
           /**
            * 연습문제-03
@@ -166,7 +166,7 @@ object DataAnswer extends ZIOSpecDefault {
                 final case class Address(street: String, postalCode: String)
 
                 def is221B(address: Address): Boolean = address match {
-                  case ("221B Baker", _) => true
+                  case Address("221B Baker", _) => true
                   case _ => false
                 }
 
@@ -199,8 +199,8 @@ object DataAnswer extends ZIOSpecDefault {
               test("conditional") {
                 final case class Address(street: String, postalCode: String)
 
-                def isBaker(address: Address): Boolean = address.street {
-                  case street if street.contains("Baker") => true
+                def isBaker(address: Address): Boolean = address.street match {
+                  case street: String if street.contains("Baker") => true
                   case _ => false
                 }
 
@@ -268,17 +268,13 @@ object DataAnswer extends ZIOSpecDefault {
            * 다음 trait를 sealed로 만들어 패턴 매칭으로 아래 빈칸을 채워보세요.
            */
           test("sealed") {
-            trait Color
+            sealed trait Color
             case object Red   extends Color
             case object Green extends Color
             case object Blue  extends Color
 
-            val _ = Green
-            val _ = Blue
-            val _ = Red
-
-            val isRed: Color => Boolean =  color match {
-              case Color.Red => true
+            val isRed: Color => Boolean = _ match {
+              case Red => true
               case _ => false
             }
 
@@ -315,8 +311,8 @@ object DataAnswer extends ZIOSpecDefault {
               val _ = PayPal("")
 
               def asCreditCard(paymentMethod: PaymentMethod): Option[CreditCard] = paymentMethod match {
-                case pp: PayPal => pp.as(None)
-                case cc: CreditCard => cc.as(Some)
+                case pp: PayPal => None
+                case cc: CreditCard => Some(cc)
               }
 
               val cc: CreditCard = CreditCard("123123123123", java.time.YearMonth.of(1984, 12), 123)
@@ -348,15 +344,16 @@ object DataAnswer extends ZIOSpecDefault {
            * enum 키워드를 이용하여 개인의 관계 상태를 모델링하는 `RelationshipStatus`의 데이터 모델을 만드세요: 기혼, 독신, 이혼.
            */
           test("example 1") {
-            enum RelationshipStatus {
-              object Married
-              object Divorced
-              object Single
+            sealed trait RelationshipStatus
+            object RelationshipStatus {
+              case object Married extends RelationshipStatus
+              case object Divorced extends RelationshipStatus
+              case object Single extends RelationshipStatus
             }
 
-            def makeMarried: RelationshipStatus = RelationShipStatus.Married
+            def makeMarried: RelationshipStatus = RelationshipStatus.Married
 
-            def makeSingle: RelationshipStatus = RelationShipStatus.Single
+            def makeSingle: RelationshipStatus = RelationshipStatus.Single
 
             assertTrue(makeMarried != makeSingle)
           } @@ ignore +
@@ -366,11 +363,12 @@ object DataAnswer extends ZIOSpecDefault {
              * 연결 URL, 데이터 형식(JSON 또는 XML), API 토큰(문자열)을 저장하는 `PaymentProcessorAPI`의 데이터 모델을 만드세요.
              */
             test("example 2") {
-              case class PaymentProcessorAPI(url: java.net.URI, df: DataFormat, apiToken: String)
-              enum DataFormat {
-                object JSON
-                object XML
+              sealed trait DataFormat
+              object DataFormat {
+                case object JSON extends DataFormat
+                case object XML extends DataFormat
               }
+              case class PaymentProcessorAPI(url: java.net.URI, df: DataFormat, apiToken: String)
 
               def define(url: java.net.URI, df: DataFormat, apiToken: String): PaymentProcessorAPI = PaymentProcessorAPI(url, df, apiToken)
 
@@ -386,13 +384,15 @@ object DataAnswer extends ZIOSpecDefault {
              * 연습문제-19
              *
              * 사용자의 암호화폐 포트폴리오에 대한 데이터 모델을 생성하세요.
+             * Symbol이 같은 경우에만 포트폴리오를 추가할 수 있습니다.
              */
             test("example 3") {
               case class Portfolio(symbol: Symbol, amount: Double)
 
-              enum Symbol {
-                object ETH
-                object BTC
+              sealed trait Symbol
+              object Symbol {
+                case object ETH extends Symbol
+                case object BTC extends Symbol
               }
 
               def ETH: Symbol = Symbol.ETH
@@ -404,48 +404,10 @@ object DataAnswer extends ZIOSpecDefault {
 
               def empty(symbol: Symbol): Portfolio = Portfolio(symbol, 0d)
 
-              val p1 = add(add(add(empty(Symbol.ETC), ETH, 1.0), ETH, 1.0), BTC, 2.0)
-              val p2 = add(add(empty(Symbol.ETC), BTC, 2.0), ETH, 2.0)
+              val p1 = add(add(add(empty(Symbol.ETH), ETH, 1.0), ETH, 1.0), BTC, 2.0)
+              val p2 = add(add(empty(Symbol.ETH), BTC, 2.0), ETH, 2.0)
 
               assertTrue(p1 == p2)
-            } @@ ignore +
-            /**
-             * 연습문제-20
-             *
-             * SaaS 제품에 대한 구독의 데이터 모델을 생성하세요.
-             * 연간 또는 월간 수준일 수 있고, 계획에 다양한 기능을 번들로 포함할 수 있습니다.
-             */
-            test("example 4") {
-              type Features     = ???
-              type Subscription = ???
-              def makeFeatures(space: Int, sso: Boolean, customLogo: Boolean): Features = ???
-              def makeMonthly(amount: Double, features: Features): Subscription         = ???
-              def makeAnnually(amount: Double, features: Features): Subscription        = ???
-
-              val features = makeFeatures(2048, true, true)
-
-              assertTrue(makeMonthly(9.99, features) != makeAnnually(9.99, features))
-            } @@ ignore +
-            /**
-             * 연습문제-21
-             *
-             * 이름과 필드 타입을 포함하는 필드의 데이터 모델을 생성하세요. 
-             * 필드 타입은 정수, 문자열, 불린 또는 폼의 필드에 대한 기타 일반적인 타입일 수 있습니다.
-             */
-            test("advanced example") {
-              type Field[A]     = ???
-              type FieldType[A] = ???
-
-              def intType: FieldType[Int]    = ???
-              def strType: FieldType[String] = ???
-
-              def makeField[A](name: String, fieldType: FieldType[A]): Field[A] = ???
-
-              val strField1 = makeField("name", strType)
-              val strField2 = makeField("name", strType)
-              val numField  = makeField("age", intType)
-
-              assertTrue(strField1 == strField2 && numField != strField1)
             } @@ ignore
         }
     }
