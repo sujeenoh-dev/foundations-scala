@@ -27,7 +27,7 @@ object Recursion extends ZIOSpecDefault {
           def sum(list: List[Int]): Int = ???
 
           assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제
            *
@@ -37,7 +37,7 @@ object Recursion extends ZIOSpecDefault {
             def max(list: List[Int]): Int = ???
 
             assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -51,7 +51,7 @@ object Recursion extends ZIOSpecDefault {
             }
 
             assertTrue(!isPrime(4) && isPrime(7) && isPrime(11))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -62,7 +62,7 @@ object Recursion extends ZIOSpecDefault {
             def fib(n: Int): Int = ???
 
             assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -74,7 +74,7 @@ object Recursion extends ZIOSpecDefault {
             def sort[A](list: List[A])(implicit ordering: Ordering[A]): List[A] = ???
 
             assertTrue(sort(List(9, 23, 1, 5)) == List(1, 5, 9, 23))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -87,7 +87,7 @@ object Recursion extends ZIOSpecDefault {
             val inc = loop(0)(_ < 10)(_ + 1)
 
             assertTrue(inc == 10)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -125,7 +125,7 @@ object Recursion extends ZIOSpecDefault {
             def sum(list: List[Int]): Int = ???
 
             assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -136,7 +136,7 @@ object Recursion extends ZIOSpecDefault {
               def max(list: List[Int]): Int = ???
 
               assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -148,7 +148,7 @@ object Recursion extends ZIOSpecDefault {
               val inc = loop(0)(_ < 10)(_ + 1)
 
               assertTrue(inc == 10)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -170,7 +170,7 @@ object Recursion extends ZIOSpecDefault {
               val result = repeatWhile(readLine)(_ == "Sherlock")((a, b) => b)
 
               assertTrue(result == "Sherlock")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -182,7 +182,7 @@ object Recursion extends ZIOSpecDefault {
               def fib(n: Int): Int = ???
 
               assertTrue(fib(3) == 2 && fib(4) == 3 && fib(5) == 5)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

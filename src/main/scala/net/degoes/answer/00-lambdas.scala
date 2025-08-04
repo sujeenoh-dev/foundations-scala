@@ -34,7 +34,7 @@ object LambdasAnswer extends ZIOSpecDefault {
           val square: Int => Int = (x: Int) => x * x
 
           assertTrue(square(3) == 9)
-        } @@ ignore +
+        } @@ ignore
           test("plus") {
 
             /**
@@ -45,7 +45,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val plus: (Int, Int) => Int = (x1: Int, x2: Int) => x1 + x2
 
             assertTrue(plus(2, 2) == 4)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            * 
@@ -57,7 +57,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val addTwo: Int => Int = _ + 2
 
             assertTrue(addTwo(2) == 4)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-03
            * 
@@ -73,7 +73,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val numberOfDigits: Int => Int = convertToString.andThen(countLength)(_)
 
             assertTrue(numberOfDigits(123) == 3)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-04
            *
@@ -89,7 +89,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val numberOfDigits: Int => Int = (x: Int) => countLength.compose(convertToString)(x)
 
             assertTrue(numberOfDigits(123) == 3)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-05
            *
@@ -100,7 +100,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val sameString: String => String = identity
 
             assertTrue(sameString("foobar") == "foobar" && sameString("barfoo") == "barfoo")
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-06
            *
@@ -111,7 +111,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val answer: String => Int = Function.const(42)
 
             assertTrue(answer("foo") == answer("bar") && answer("foobar") == 42)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-07
            *
@@ -121,7 +121,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             val prependSpace: Int => (String => String) = n => (s => " " * n + s)
 
             assertTrue(prependSpace(5)("foo") == "     foo")
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-08
            *
@@ -146,7 +146,7 @@ object LambdasAnswer extends ZIOSpecDefault {
             type Type = Int => Int
 
             assertTypeEquals[f.type, Type]
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE-10
              *
@@ -158,7 +158,7 @@ object LambdasAnswer extends ZIOSpecDefault {
               type Type = (Int, Int) => Int
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE-11
              *
@@ -170,7 +170,7 @@ object LambdasAnswer extends ZIOSpecDefault {
               type Type = ((Int, Int)) => Int
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE-12
              *
@@ -182,7 +182,7 @@ object LambdasAnswer extends ZIOSpecDefault {
               type Type = Int => Int => Int
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE-13
              *
@@ -221,7 +221,7 @@ object LambdasAnswer extends ZIOSpecDefault {
               
 
             assertTrue(!divide.isDefinedAt((42, 0)))
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE-15
              *

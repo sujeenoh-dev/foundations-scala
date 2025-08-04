@@ -39,7 +39,7 @@ object Purity extends ZIOSpecDefault {
           }
 
           assertTrue(reduce[Int](List.empty[Int], _ + _) ne null)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제
            *
@@ -58,7 +58,7 @@ object Purity extends ZIOSpecDefault {
             assertTrue(
               generateEmailSubject("Toyota Accord", "New York City", 295.00, MonthDay.now(), MonthDay.now()) != null
             )
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -73,7 +73,7 @@ object Purity extends ZIOSpecDefault {
             }
 
             assertTrue(normal() == normal())
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *

@@ -30,7 +30,7 @@ object NullsAnswer extends ZIOSpecDefault {
           def parentOf(file: String): Option[File] = Option(new File(file).getParentFile)
 
           assertTrue(parentOf("") != null)
-        } @@ ignore +
+        } @@ ignore
           /**
            * EXERCISE-02
            *
@@ -46,7 +46,7 @@ object NullsAnswer extends ZIOSpecDefault {
             val nullInt = null.asInstanceOf[Int]
 
             assertTrue(fromNullable(nullInt) == None && fromNullable(42) == Some(42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-03
            *
@@ -62,7 +62,7 @@ object NullsAnswer extends ZIOSpecDefault {
             def config: Config = loadConfig().getOrElse(defaultConfig)
 
             assertTrue(config != null)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-04
            *
@@ -75,7 +75,7 @@ object NullsAnswer extends ZIOSpecDefault {
             def convert(o: Option[Int]): Option[Char] = o.map(_.toChar)
 
             assertTrue(convert(option) == Some(42.toChar))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-05
            *
@@ -89,7 +89,7 @@ object NullsAnswer extends ZIOSpecDefault {
               left.flatMap(l => right.map(r => (l, r)))
 
             assertTrue(both(Some(42), Some(24)) == Some((42, 24)))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-06
            *
@@ -101,7 +101,7 @@ object NullsAnswer extends ZIOSpecDefault {
               left.orElse(right)
 
             assertTrue(firstOf(None, Some(24)) == Some(24))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-07
            *
@@ -115,7 +115,7 @@ object NullsAnswer extends ZIOSpecDefault {
               first.flatMap(andThen)
 
             assertTrue(chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE-08
            *
@@ -155,7 +155,7 @@ object NullsAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(SafeProperty.getProperty("foo.bar") == None)
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE-10
              *

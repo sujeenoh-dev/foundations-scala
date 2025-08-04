@@ -42,7 +42,7 @@ object Data extends ZIOSpecDefault {
           val holmes = new Person("Sherlock Holmes", 42) // TODO
 
           assertTrue(getName(holmes) == "Sherlock Holmes" && getAge(holmes) == 42)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제
            *
@@ -54,7 +54,7 @@ object Data extends ZIOSpecDefault {
             }
 
             assertTrue(Person("Sherlock Holmes", 42) == Person("Sherlock Holmes", 42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -64,7 +64,7 @@ object Data extends ZIOSpecDefault {
             class Profile(val age: Int) // TODO
 
             assertTrue(new Profile(42) == new Profile(42)) // TODO
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -74,7 +74,7 @@ object Data extends ZIOSpecDefault {
             class CreditCard(val number: String) // TODO
 
             assertTrue(new CreditCard("123").hashCode == new CreditCard("123").hashCode) // TODO
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -84,7 +84,7 @@ object Data extends ZIOSpecDefault {
             class Address(val street: String) // TODO
 
             assertTrue(new Address("221B Baker Street").toString == "Address(221B Baker Street)") // TODO
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -102,7 +102,7 @@ object Data extends ZIOSpecDefault {
             val perms = new Permissions(true, false, false) // TODO
 
             assertTrue(perms.copy(canRead = false) == new Permissions(false, false, false)) // TODO
-          } @@ ignore +
+          } @@ ignore
           suite("patterns") {
             /**
               * 패턴매칭은 값이 어떤 모양인지 살펴보고 “이 경우엔 이렇게, 저 경우엔 저렇게” 처리할 수 있도록 해 주는 일종의 다중 if-else 문입니다.
@@ -128,7 +128,7 @@ object Data extends ZIOSpecDefault {
               def extractStreet(address: Address): String = ??? // TODO
 
               assertTrue(extractStreet(Address("221B Baker")) == "221B Baker")
-            } @@ ignore +
+            } @@ ignore
               /**
                * 연습문제
                *
@@ -141,7 +141,7 @@ object Data extends ZIOSpecDefault {
                 def extractPostalCode(address: Address): String = ??? // TODO
 
                 assertTrue(extractPostalCode(Address("221B Baker", "NW1 6XE")) == "NW1 6XE")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -155,7 +155,7 @@ object Data extends ZIOSpecDefault {
                 def is221B(address: Address): Boolean = ??? // TODO
 
                 assertTrue(is221B(Address("221B Baker", "NW1 6XE")))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -170,7 +170,7 @@ object Data extends ZIOSpecDefault {
                 def neighbor(address: Address): String = ??? // TODO
 
                 assertTrue(neighbor(Address("220", "Baker", "NW1 6XE")) == "Knows Holmes")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -183,7 +183,7 @@ object Data extends ZIOSpecDefault {
                 def isBaker(address: Address): Boolean = ??? // TODO
 
                 assertTrue(isBaker(Address("220 Baker", "NW1 6XE")))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -199,7 +199,7 @@ object Data extends ZIOSpecDefault {
                 val sherlock = Person("Sherlock Holmes", Address("221B Baker", "NW1 6XE"))
 
                 assertTrue(extractPostalCode(sherlock) == "NW1 6XE")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -256,7 +256,7 @@ object Data extends ZIOSpecDefault {
             }
 
             assertTrue(!isRed(Blue))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -270,7 +270,7 @@ object Data extends ZIOSpecDefault {
               def isCountry(a: Any) = a.isInstanceOf[Country]
 
               assertTrue(isCountry(UK) && isCountry(USA))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 스칼라의 패턴 매칭에서 **as 패턴(as pattern)**은, 패턴으로 값을 분해하면서 분해한 값 전체를 그대로 별도의 이름으로도 저장하고 싶을 때 사용하는 문법입니다.
              *  즉, 내부 값도 꺼내고 싶고, 동시에 원래 값 전체도 변수로 가지고 있고 싶을 때 쓰는 패턴입니다.
@@ -323,7 +323,7 @@ object Data extends ZIOSpecDefault {
             def makeSingle: RelationshipStatus = ???
 
             assertTrue(makeMarried != makeSingle)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -342,7 +342,7 @@ object Data extends ZIOSpecDefault {
               val api2 = define(url, json, "123124")
 
               assertTrue(api1 == api1 && api1 != api2)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -364,7 +364,7 @@ object Data extends ZIOSpecDefault {
               val p2 = add(add(empty, BTC, 2.0), ETH, 2.0)
 
               assertTrue(p1 == p2)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -381,7 +381,7 @@ object Data extends ZIOSpecDefault {
               val features = makeFeatures(2048, true, true)
 
               assertTrue(makeMonthly(9.99, features) != makeAnnually(9.99, features))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

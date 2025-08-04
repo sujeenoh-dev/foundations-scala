@@ -34,7 +34,7 @@ object Lambdas extends ZIOSpecDefault {
           val square: Int => Int = ??? // TODO
 
           assertTrue(square(3) == 9)
-        } @@ ignore +
+        } @@ ignore
           test("plus") {
 
             /**
@@ -45,7 +45,7 @@ object Lambdas extends ZIOSpecDefault {
             val plus: (Int, Int) => Int = ??? // TODO
 
             assertTrue(plus(2, 2) == 4)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            * 
@@ -57,7 +57,7 @@ object Lambdas extends ZIOSpecDefault {
             val addTwo: Int => Int = ??? // TODO
 
             assertTrue(addTwo(2) == 4)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            * 
@@ -75,7 +75,7 @@ object Lambdas extends ZIOSpecDefault {
             val numberOfDigits: Int => Int = ??? // TODO
 
             assertTrue(numberOfDigits(123) == 3)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -92,7 +92,7 @@ object Lambdas extends ZIOSpecDefault {
             val numberOfDigits: Int => Int = ??? // TODO
 
             assertTrue(numberOfDigits(123) == 3)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -103,7 +103,7 @@ object Lambdas extends ZIOSpecDefault {
             val sameString: String => String = ???
 
             assertTrue(sameString("foobar") == "foobar" && sameString("barfoo") == "barfoo")
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -114,7 +114,7 @@ object Lambdas extends ZIOSpecDefault {
             val answer: String => Int = ??? // TODO
 
             assertTrue(answer("foo") == answer("bar") && answer("foobar") == 42)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -124,7 +124,7 @@ object Lambdas extends ZIOSpecDefault {
             val prependSpace: Int => (String => String) = ??? // TODO
 
             assertTrue(prependSpace(5)("foo") == "     foo")
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -149,7 +149,7 @@ object Lambdas extends ZIOSpecDefault {
             type Type = f.type // TODO: EDIT HERE
 
             assertTypeEquals[f.type, Type]
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE
              *
@@ -161,7 +161,7 @@ object Lambdas extends ZIOSpecDefault {
               type Type = f.type // TODO: EDIT HERE
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE
              *
@@ -173,7 +173,7 @@ object Lambdas extends ZIOSpecDefault {
               type Type = f.type // TODO: EDIT HERE
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE
              *
@@ -185,7 +185,7 @@ object Lambdas extends ZIOSpecDefault {
               type Type = f.type // TODO: EDIT HERE
 
               assertTypeEquals[f.type, Type]
-            } @@ ignore +
+            } @@ ignore
             /**
              * EXERCISE
              *
@@ -222,7 +222,7 @@ object Lambdas extends ZIOSpecDefault {
               ??? // TODO
 
             assertTrue(!divide.isDefinedAt((42, 0)))
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE
              *

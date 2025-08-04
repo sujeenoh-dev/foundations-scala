@@ -33,7 +33,7 @@ object Exceptions extends ZIOSpecDefault {
           }
 
           assertTrue(test == "None")
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제
            *
@@ -50,7 +50,7 @@ object Exceptions extends ZIOSpecDefault {
             }
 
             assertTrue(test == "Failure")
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -92,7 +92,7 @@ object Exceptions extends ZIOSpecDefault {
             }
 
             assertTrue(Id.fromString("123").isDefined)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -116,7 +116,7 @@ object Exceptions extends ZIOSpecDefault {
               }
 
               assertTrue(Id.fromString("123").isSuccess)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -156,7 +156,7 @@ object Exceptions extends ZIOSpecDefault {
             def fallback[A](left: Option[A], right: Option[A]): Option[A] = ???
 
             assertTrue(fallback(None, Some(42)) == Some(42))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -169,7 +169,7 @@ object Exceptions extends ZIOSpecDefault {
               def fallback[A](left: Try[A], right: Try[A]): Try[A] = ???
 
               assertTrue(fallback(Failure(new Throwable), Success(42)) == Success(42))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -207,7 +207,7 @@ object Exceptions extends ZIOSpecDefault {
             }
 
             assertTrue(Natural.fromString("123").isDefined)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -231,7 +231,7 @@ object Exceptions extends ZIOSpecDefault {
               }
 
               assertTrue(Natural.fromString("123").isSuccess)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -271,7 +271,7 @@ object Exceptions extends ZIOSpecDefault {
             def both[A, B](left: Option[A], right: Option[B]): Option[(A, B)] = ???
 
             assertTrue(both(Some(4), Some(2)) == Some((4, 2)))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -284,7 +284,7 @@ object Exceptions extends ZIOSpecDefault {
               def both[A, B](left: Try[A], right: Try[B]): Try[(A, B)] = ???
 
               assertTrue(both(Try(4), Try(2)) == Try((4, 2)))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -329,7 +329,7 @@ object Exceptions extends ZIOSpecDefault {
               ConnectionInfo(Config.getHost(), Config.getPort())
 
             assertTrue(loadConnectionInfo().FIXME)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -360,7 +360,7 @@ object Exceptions extends ZIOSpecDefault {
                 ConnectionInfo(Config.getHost(), Config.getPort())
 
               assertTrue(loadConnectionInfo().FIXME)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -416,7 +416,7 @@ object Exceptions extends ZIOSpecDefault {
             }
 
             assertTrue(getUserAndDocs == ???)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -438,7 +438,7 @@ object Exceptions extends ZIOSpecDefault {
               }
 
               assertTrue(getUserAndDocs == ???)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -460,7 +460,7 @@ object Exceptions extends ZIOSpecDefault {
               }
 
               assertTrue(getUserAndDocs == ???)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

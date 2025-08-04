@@ -22,7 +22,7 @@ package net.degoes
 
 import zio.test._
 import zio.test.TestAspect._
-import scala.util.{Try, Success, Failure}
+import scala.util._
 
 object Safety extends ZIOSpecDefault {
   def spec =
@@ -42,6 +42,8 @@ object Safety extends ZIOSpecDefault {
             2 -> User("Bob", 30),
             3 -> User("Charlie", 28)
           )
+
+          val _ = users
           
           def findUser(id: Int): Option[User] = ???
           
@@ -50,7 +52,7 @@ object Safety extends ZIOSpecDefault {
           
           val user999 = findUser(999)
           assertTrue(user999 == None)
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 2
@@ -69,14 +71,11 @@ object Safety extends ZIOSpecDefault {
           val name999 = findUserName(999).getOrElse(???)
           assertTrue(name999 == "Unknown")
           
-          def greetUser(id: Int): String = findUserName(id) match {
-            case ??? => ???
-            case ??? => ???
-          }
+          def greetUser(id: Int): String = findUserName(id).getOrElse(???)
           
           assertTrue(greetUser(1) == "Hello, Alice!")
           assertTrue(greetUser(999) == "User not found")
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 3
@@ -89,7 +88,7 @@ object Safety extends ZIOSpecDefault {
             ages.get(id)
           }
           
-          val ageNextYear = findAge(1).map(???)
+          val ageNextYear: Option[Int] = findAge(1).map(???)
           assertTrue(ageNextYear == Some(26))
           
           val ageNextYear999 = findAge(999).map(_ + 1)
@@ -112,7 +111,7 @@ object Safety extends ZIOSpecDefault {
           
           val result2 = safeStringToInt("abc")
           assertTrue(result2.isFailure)
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 5
@@ -160,6 +159,9 @@ object Safety extends ZIOSpecDefault {
           
           val success = registerUser("new@test.com", "strongpass")
           assertTrue(success == Right(User("new@test.com", "strongpass")))
+
+          val emailAlreadyExists = registerUser("existing@test.com", "strongpass")
+          assertTrue(emailAlreadyExists == Left(EmailAlreadyExists))
           
           val invalidEmail = registerUser("invalid-email", "strongpass")
           assertTrue(invalidEmail == Left(InvalidEmail))
@@ -193,8 +195,8 @@ object Safety extends ZIOSpecDefault {
             else Right(username)
           }
           
-          assertTrue(findInList(List(1, 2, 3), _ > 2) == Some(3))
-          assertTrue(parseNumber("3.14").map(_.round) == Success(3))
+          assertTrue(findInList(List(1, 2, 3), (x: Int) => x > 2) == Some(3))
+          assertTrue(parseNumber("3.14").map(_.round) == Success(3L))
           assertTrue(validateUsername("ab") == Left(TooShort))
         } @@ ignore
         

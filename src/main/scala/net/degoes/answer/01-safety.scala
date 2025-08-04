@@ -57,7 +57,7 @@ object SafetyAnswer extends ZIOSpecDefault {
           assertTrue(user999 == None)
           
           // Option을 사용하면 "값이 없을 수 있다"는 것이 타입에 명시됨!
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * 연습문제-02: Option 값 사용하기
@@ -85,7 +85,7 @@ object SafetyAnswer extends ZIOSpecDefault {
           
           assertTrue(greetUser(1) == "안녕하세요, 홍길동님!")
           assertTrue(greetUser(999) == "사용자를 찾을 수 없습니다.")
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * 연습문제-03: Option 변환하기
@@ -130,7 +130,7 @@ object SafetyAnswer extends ZIOSpecDefault {
           assertTrue(result2.isFailure)  // Failure(NumberFormatException)
           
           // Try를 사용하면 "실패할 수 있는 계산"이 타입에 명시됨!
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * 연습문제-05: Try 값 사용하기
@@ -226,8 +226,8 @@ object SafetyAnswer extends ZIOSpecDefault {
           }
           
           // 사용 예시
-          assertTrue(findInList(List(1, 2, 3), _ > 2) == Some(3))
-          assertTrue(parseNumber("3.14").map(_.round) == Success(3))
+          assertTrue(findInList(List(1, 2, 3), (x: Int) => x > 2) == Some(3))
+          assertTrue(parseNumber("3.14").map(_.round) == Success(3L))
           assertTrue(validateUsername("ab") == Left(TooShort))
           
           /*

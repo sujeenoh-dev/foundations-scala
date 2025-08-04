@@ -47,7 +47,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
           list.foreach(sum += _)
 
           assertTrue(sum == 6)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제-02
            *
@@ -59,7 +59,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.map(_ * 2)
 
             assertTrue(list2.sum == 12 && list2.length == list1.length)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-03
            *
@@ -73,7 +73,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.filter(isEven)
 
             assertTrue(list2 == List(0, 0, 2))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-04
            *
@@ -85,7 +85,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.take(2)
 
             assertTrue(list2 == List(1, 2))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-05
            *
@@ -97,7 +97,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.takeWhile(_ < 3)
 
             assertTrue(list2 == List(1, 2, 0))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -109,7 +109,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.drop(2)
 
             assertTrue(list2 == List(3, 4))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -121,7 +121,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val list2 = list1.dropWhile(_ < 3)
 
             assertTrue(list2 == List(3, 1, 2))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -137,7 +137,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             def list2: List[Even] = list1.collect { case x if isEven(x) => Even(x) }
 
             assertTrue(list2 == List(Even(0), Even(0), Even(2)))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -151,7 +151,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             val (even, odd) = list.partition(isEven)
 
             assertTrue(even == List(0, 0, 2) && odd == List(3, 1))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -166,7 +166,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             def summedList2: Option[Int] = list2.reduceOption(_ + _)
 
             assertTrue(summedList1 == None && summedList2 == Some(6))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -178,7 +178,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             def firstGreaterThan2: Option[Int] = list.find(_ > 2)
 
             assertTrue(firstGreaterThan2 == Some(3))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -190,7 +190,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             def existsNegative: Boolean = list.exists(_ < 0)
 
             assertTrue(existsNegative)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -204,7 +204,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
             def forallEven: Boolean = list.forall(isEven)
 
             assertTrue(forallEven)
-          } @@ ignore +
+          } @@ ignore
           suite("folds") {
 
             /**
@@ -218,7 +218,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(sum(List(1, 2, 3, 4, 5)) == 15)
-            } @@ ignore +
+            } @@ ignore
               /**
                * 연습문제
                *
@@ -231,7 +231,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(max(List(1, 7, 3, 2, 4, 5)) == 7)
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -244,7 +244,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(min(List(1, 7, 3, 2, 0, 4, 5)) == 0)
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -256,7 +256,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(reverse(List(1, 7, 3)) == List(3, 7, 1))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -268,7 +268,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(partition(List(1, 7, 3))(_ < 5) == (List(3, 1), List(7)))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -283,7 +283,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(take(2, List(1, 7, 3)) == List(1, 7))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제
                *
@@ -315,7 +315,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
               }
 
             assertTrue(sum((0 to 10000).toList) > 0)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -331,7 +331,7 @@ object CollectionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(sumProduct(Vector.fill(1000)(2), Vector.fill(1000)(2)) > 0)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

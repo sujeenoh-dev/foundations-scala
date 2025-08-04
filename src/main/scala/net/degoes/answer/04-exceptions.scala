@@ -33,7 +33,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
           }
 
           assertTrue(test == "None")
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제-02
            *
@@ -50,7 +50,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(test == "Failure")
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-03
            *
@@ -90,7 +90,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(Id.fromString("123").isDefined)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-05
              *
@@ -112,7 +112,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(Id.fromString("123").isSuccess)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-06
              *
@@ -151,7 +151,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               left.orElse(right)
 
             assertTrue(fallback(None, Some(42)) == Some(42))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-08
              *
@@ -165,7 +165,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
                 left.orElse(right)
 
               assertTrue(fallback(Failure(new Throwable), Success(42)) == Success(42))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-09
              *
@@ -202,7 +202,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(Natural.fromString("123").isDefined)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-11
              *
@@ -224,7 +224,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(Natural.fromString("123").isSuccess)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-12
              *
@@ -263,7 +263,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               left.flatMap(l => right.map((l, _)))
 
             assertTrue(both(Some(4), Some(2)) == Some((4, 2)))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-14
              *
@@ -277,7 +277,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
                 left.flatMap(l => right.map((l, _)))
 
               assertTrue(both(Try(4), Try(2)) == Try((4, 2)))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-15
              *
@@ -318,7 +318,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               } yield ConnectionInfo(host, port)
 
             assertTrue(loadConnectionInfo().isDefined)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-17
              *
@@ -345,7 +345,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
                 } yield ConnectionInfo(host, port)
 
               assertTrue(loadConnectionInfo().isSuccess)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-18
              *
@@ -394,7 +394,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(getUserAndDocs == (Some("sherlock@holmes.com"), Success(List("Doc 1", "Doc 2"))))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -414,7 +414,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(getUserAndDocs == (Right("sherlock@holmes.com"), Some(List("Doc 1", "Doc 2"))))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -434,7 +434,7 @@ object ExceptionsAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(getUserAndDocs == (Right("sherlock@holmes.com"), Success(List("Doc 1", "Doc 2"))))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

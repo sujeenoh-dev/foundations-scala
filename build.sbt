@@ -27,16 +27,16 @@ scalacOptions ++= Seq(
   "-language:_"
 )
 
-javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.7", "-target", "1.7")
+javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.8", "-target", "1.8")
 
 val ZIOVersion = "2.1.10"
 
 libraryDependencies ++= Seq(
-  "dev.zio" %% "zio"          % ZIOVersion,
-  "dev.zio" %% "zio-streams"  % ZIOVersion,
-  "dev.zio" %% "zio-test"     % ZIOVersion,
-  "dev.zio" %% "zio-test"     % ZIOVersion % "test",
-  "dev.zio" %% "zio-test-sbt" % ZIOVersion % "test"
+  "dev.zio" %% "zio"              % ZIOVersion,
+  "dev.zio" %% "zio-streams"      % ZIOVersion,
+  "dev.zio" %% "zio-prelude"      % "1.0.0-RC23",
+  "dev.zio" %% "zio-test"         % ZIOVersion % "test",
+  "dev.zio" %% "zio-test-sbt"     % ZIOVersion % "test"
 )
 
 testFrameworks := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))

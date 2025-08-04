@@ -44,7 +44,7 @@ object DataAnswer extends ZIOSpecDefault {
           val holmes = Person("Sherlock Holmes", 42)
 
           assertTrue(getName(holmes) == "Sherlock Holmes" && getAge(holmes) == 42)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제-02
            *
@@ -61,7 +61,7 @@ object DataAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(Recipe("Sweet Potato", 42) == Recipe("Sweet Potato", 42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-03
            *
@@ -71,7 +71,7 @@ object DataAnswer extends ZIOSpecDefault {
             case class Profile(age: Int)
 
             assertTrue(Profile(42) == Profile(42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-04
            *
@@ -81,7 +81,7 @@ object DataAnswer extends ZIOSpecDefault {
             case class CreditCard(val number: String)
 
             assertTrue(CreditCard("123").hashCode == CreditCard("123").hashCode)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-05
            *
@@ -91,7 +91,7 @@ object DataAnswer extends ZIOSpecDefault {
             case class Address(val street: String)
 
             assertTrue(Address("221B Baker Street").toString == "Address(221B Baker Street)")
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-06
            *
@@ -113,7 +113,7 @@ object DataAnswer extends ZIOSpecDefault {
             val perms = Permissions(true, false, false)
 
             assertTrue(perms.copy(canRead = false) == Permissions(false, false, false))
-          } @@ ignore +
+          } @@ ignore
           suite("patterns") {
             /**
               * 패턴매칭은 값이 어떤 모양인지 살펴보고 “이 경우엔 이렇게, 저 경우엔 저렇게” 처리할 수 있도록 해 주는 일종의 다중 if-else 문입니다.
@@ -141,7 +141,7 @@ object DataAnswer extends ZIOSpecDefault {
               }
 
               assertTrue(extractStreet(Address("221B Baker")) == "221B Baker")
-            } @@ ignore +
+            } @@ ignore
               /**
                * 연습문제-08
                *
@@ -156,7 +156,7 @@ object DataAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(extractPostalCode(Address("221B Baker", "NW1 6XE")) == "NW1 6XE")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제-09
                *
@@ -173,7 +173,7 @@ object DataAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(is221B(Address("221B Baker", "NW1 6XE")))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제-10
                *
@@ -191,7 +191,7 @@ object DataAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(neighbor(Address("220", "Baker", "NW1 6XE")) == "Knows Holmes")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제-11
                *
@@ -207,7 +207,7 @@ object DataAnswer extends ZIOSpecDefault {
                 }
 
                 assertTrue(isBaker(Address("220 Baker", "NW1 6XE")))
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제-12
                *
@@ -227,7 +227,7 @@ object DataAnswer extends ZIOSpecDefault {
                 val sherlock = Person("Sherlock Holmes", Address("221B Baker", "NW1 6XE"))
 
                 assertTrue(extractPostalCode(sherlock) == "NW1 6XE")
-              } @@ ignore +
+              } @@ ignore
               /**
                * 연습문제-13
                *
@@ -281,7 +281,7 @@ object DataAnswer extends ZIOSpecDefault {
             }
 
             assertTrue(!isRed(Blue))
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-15
              *
@@ -295,7 +295,7 @@ object DataAnswer extends ZIOSpecDefault {
               def isCountry(a: Any) = a.isInstanceOf[Country]
 
               assertTrue(isCountry(UK) && isCountry(USA))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-16
              *
@@ -358,7 +358,7 @@ object DataAnswer extends ZIOSpecDefault {
             def makeSingle: RelationshipStatus = RelationshipStatus.Single
 
             assertTrue(makeMarried != makeSingle)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-18
              *
@@ -381,7 +381,7 @@ object DataAnswer extends ZIOSpecDefault {
               val api2 = define(url, json, "123124")
 
               assertTrue(api1 == api1 && api1 != api2)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-19
              *

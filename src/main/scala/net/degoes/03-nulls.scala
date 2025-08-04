@@ -53,7 +53,7 @@ object Nulls extends ZIOSpecDefault {
           def parentOf(file: String) = new File(file).getParent
 
           assertTrue(parentOf("") != null)
-        } @@ ignore +
+        } @@ ignore
           /**
            * EXERCISE
            *
@@ -67,7 +67,7 @@ object Nulls extends ZIOSpecDefault {
             val nullInt = null.asInstanceOf[Int]
 
             assertTrue(fromNullable(nullInt) == None && fromNullable(42) == Some(42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -88,7 +88,7 @@ object Nulls extends ZIOSpecDefault {
             }
 
             assertTrue(config != null)
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -101,7 +101,7 @@ object Nulls extends ZIOSpecDefault {
             def convert(o: Option[Int]): Option[Char] = ???
 
             assertTrue(convert(option) == Some(42.toChar))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -113,7 +113,7 @@ object Nulls extends ZIOSpecDefault {
               ???
 
             assertTrue(both(Some(42), Some(24)) == Some((42, 24)))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -125,7 +125,7 @@ object Nulls extends ZIOSpecDefault {
               ???
 
             assertTrue(firstOf(None, Some(24)) == Some(24))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -139,7 +139,7 @@ object Nulls extends ZIOSpecDefault {
               ???
 
             assertTrue(chain(Some(42), (x: Int) => if (x < 10) None else Some(x)) == Some(42))
-          } @@ ignore +
+          } @@ ignore
           /**
            * EXERCISE
            *
@@ -186,7 +186,7 @@ object Nulls extends ZIOSpecDefault {
             }
 
             assertTrue(SafeProperty.getProperty("foo.bar") == None)
-          } @@ ignore +
+          } @@ ignore
             /**
              * EXERCISE
              *

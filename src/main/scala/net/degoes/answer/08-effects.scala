@@ -30,7 +30,7 @@ object EffectsAnswer extends ZIOSpecDefault {
           for {
             result <- effect
           } yield assertTrue(result == 42)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제-02
            *
@@ -45,7 +45,7 @@ object EffectsAnswer extends ZIOSpecDefault {
             for {
               result <- effect
             } yield assertTrue(result == 42)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제-03
            *
@@ -77,7 +77,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               _   <- TestConsole.feedLines("Sherlock")
               int <- readInt
             } yield assertTrue(int == 8)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-05
              *
@@ -94,7 +94,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 value <- mappedFailure.flip
               } yield assertTrue(value == "42")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-06
              *
@@ -110,7 +110,7 @@ object EffectsAnswer extends ZIOSpecDefault {
                 _      <- zipped
                 output <- TestConsole.output
               } yield assertTrue(output == Vector("Sherlock\n", "Holmes\n"))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-07
              *
@@ -126,7 +126,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 result <- zipLeft
               } yield assertTrue(result == "Roger Rabbit")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-08
              *
@@ -142,7 +142,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 result <- zipLeft
               } yield assertTrue(result == 42)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-09
              *
@@ -166,7 +166,7 @@ object EffectsAnswer extends ZIOSpecDefault {
                 _      <- program
                 output <- TestConsole.output
               } yield assertTrue(output == expected)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-10
              *
@@ -180,7 +180,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 value <- effect
               } yield assertTrue(value == "Recovered!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-11
              *
@@ -194,7 +194,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 value <- effect
               } yield assertTrue(value == "Did it!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-12
              *
@@ -213,7 +213,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               for {
                 list <- iterationResult
               } yield assertTrue(list == List("a", "a", "a"))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-13
              *
@@ -277,7 +277,7 @@ object EffectsAnswer extends ZIOSpecDefault {
               _      <- accum.get.repeatUntil(_.length > 10) *> fiber.interrupt
               result <- accum.get
             } yield assertTrue(result.length > 10)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제-15
              *
@@ -296,7 +296,7 @@ object EffectsAnswer extends ZIOSpecDefault {
                 worker = makeWorker(ref)
                 result <- worker.eventually
               } yield assertTrue(result == "Success!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-16
              *
@@ -310,7 +310,7 @@ object EffectsAnswer extends ZIOSpecDefault {
                 _      <- effect.repeatN(5)
                 result <- ref.get
               } yield assertTrue(result == 6)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제-17
              *

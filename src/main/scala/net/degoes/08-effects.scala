@@ -30,7 +30,7 @@ object Effects extends ZIOSpecDefault {
           for {
             result <- effect
           } yield assertTrue(result == 42)
-        } @@ ignore +
+        } @@ ignore
           /**
            * 연습문제
            *
@@ -47,7 +47,7 @@ object Effects extends ZIOSpecDefault {
             for {
               result <- effect
             } yield assertTrue(result == 42)
-          } @@ ignore +
+          } @@ ignore
           /**
            * 연습문제
            *
@@ -81,7 +81,7 @@ object Effects extends ZIOSpecDefault {
               _   <- TestConsole.feedLines("Sherlock")
               int <- readInt
             } yield assertTrue(int == 8)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -98,7 +98,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 value <- mappedFailure.flip
               } yield assertTrue(value == "42")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -117,7 +117,7 @@ object Effects extends ZIOSpecDefault {
                 _      <- zipped
                 output <- TestConsole.output
               } yield assertTrue(output == Vector("Sherlock\n", "Holmes\n"))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -136,7 +136,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 result <- zipLeft
               } yield assertTrue(result == "Roger Rabbit")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -155,7 +155,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 result <- zipLeft
               } yield assertTrue(result == 42)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -176,7 +176,7 @@ object Effects extends ZIOSpecDefault {
                 _      <- program
                 output <- TestConsole.output
               } yield assertTrue(output == expected)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -190,7 +190,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 value <- effect
               } yield assertTrue(value == "Recovered!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -204,7 +204,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 value <- effect
               } yield assertTrue(value == "Did it!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -222,7 +222,7 @@ object Effects extends ZIOSpecDefault {
               for {
                 list <- iterationResult
               } yield assertTrue(list == List("a", "a", "a"))
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -287,7 +287,7 @@ object Effects extends ZIOSpecDefault {
               _      <- accum.get.repeatUntil(_.length > 10) *> fiber.interrupt
               result <- accum.get
             } yield assertTrue(result.length > 10)
-          } @@ ignore +
+          } @@ ignore
             /**
              * 연습문제
              *
@@ -306,7 +306,7 @@ object Effects extends ZIOSpecDefault {
                 worker = makeWorker(ref)
                 result <- worker
               } yield assertTrue(result == "Success!")
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *
@@ -320,7 +320,7 @@ object Effects extends ZIOSpecDefault {
                 _      <- effect
                 result <- ref.get
               } yield assertTrue(result == 6)
-            } @@ ignore +
+            } @@ ignore
             /**
              * 연습문제
              *

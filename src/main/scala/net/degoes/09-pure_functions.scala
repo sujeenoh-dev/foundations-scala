@@ -59,7 +59,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Unit, Unit, Any, Nothing, Int] = ???
           
           assertTrue(computation.runAll(()) == ((), (), 42))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 2
@@ -71,7 +71,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Unit, Unit, Any, String, Int] = ???
           
           assertTrue(computation.runAll(()).isLeft)
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 3
@@ -84,7 +84,7 @@ object PureFunctions extends ZIOSpecDefault {
           val doubled: ZPure[Nothing, Unit, Unit, Any, Nothing, Int] = ???
           
           assertTrue(doubled.runAll(()) == ((), (), 20))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 4
@@ -116,7 +116,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Int, Int, Any, Nothing, Int] = ???
           
           assertTrue(computation.runAll(42) == ((), 42, 42))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 6
@@ -127,7 +127,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Int, Int, Any, Nothing, Unit] = ???
           
           assertTrue(computation.runAll(10) == ((), 100, ()))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 7
@@ -157,7 +157,7 @@ object PureFunctions extends ZIOSpecDefault {
           
           val config = Config(3)
           assertTrue(computation.provideEnvironment(config).runAll(()) == ((), (), 15))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 9
@@ -188,7 +188,7 @@ object PureFunctions extends ZIOSpecDefault {
           
           val (logs, _, result) = computation.runAll(())
           assertTrue(logs == "Computing result" && result == 42)
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 11
@@ -226,7 +226,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Unit, Unit, Any, Nothing, Int] = ???
           
           assertTrue(computation.runAll(()) == ((), (), 0))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 13
@@ -258,7 +258,7 @@ object PureFunctions extends ZIOSpecDefault {
           val computation: ZPure[Nothing, Unit, Unit, Any, Nothing, List[Int]] = ???
           
           assertTrue(computation.runAll(()) == ((), (), List(2, 4, 6, 8, 10)))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 15
@@ -275,7 +275,7 @@ object PureFunctions extends ZIOSpecDefault {
           
           val (_, finalState, results) = computation.runAll(0)
           assertTrue(finalState == 15 && results == List(0, 1, 3, 6, 10))
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 16
@@ -331,7 +331,7 @@ object PureFunctions extends ZIOSpecDefault {
           
           assertTrue(validUser.runAll(()).isRight)
           assertTrue(invalidUser.runAll(()).isLeft)
-        } @@ ignore +
+        } @@ ignore
         
         /**
          * EXERCISE 18
